@@ -1,6 +1,6 @@
 {
     "name": "reach-digital/php-connector-lib",
-    "description": "Library to create a connector with any eCommerce PHP Internal System (M1/M2/etc.)",
+    "description": "Library to create a connector with any eCommerce PHP Platform (M1/M2/etc.)",
     "type": "library",
     "license": "COMMERCIAL",
     "authors": [
