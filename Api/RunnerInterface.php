@@ -8,5 +8,8 @@ namespace ReachDigital\PhpConnectorLib\Api;
 
 interface RunnerInterface
 {
-
+    /**
+     * @return mixed
+     */
+    function run();
 }
