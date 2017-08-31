@@ -21,4 +21,12 @@ interface ConnectorInterface
      * @return void
      */
     function run(array $references = null);
+
+
+    /**
+     * Queues a single entity
+     * @param mixed $entity
+     * @return void
+     */
+    function enqueue($entity);
 }

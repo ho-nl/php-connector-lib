@@ -30,4 +30,11 @@ class Runner {
             $connector->run($references);
         }
     }
+
+
+    function enqueue($type = null, $entity) {
+        foreach ($this->connectorPool->getConnectors($type) as $connector) {
+            $connector->enqueue($entity);
+        }
+    }
 }

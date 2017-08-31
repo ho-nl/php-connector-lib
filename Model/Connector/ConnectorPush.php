@@ -8,42 +8,48 @@ namespace ReachDigital\PhpConnectorLib\Model\Connector;
 
 use ReachDigital\PhpConnectorLib\Api\Connector\ConnectorPushInterface;
 use ReachDigital\PhpConnectorLib\Api\IntegrationDirection\PushInterface;
+use ReachDigital\PhpConnectorLib\Api\QueueInterface;
 
 class ConnectorPush implements ConnectorPushInterface
 {
     /**
-     * @var \Resque
+     * @var QueueInterface
      */
-    private $resque;
+    private $queue;
     /**
      * @var PushInterface
      */
     private $integration;
 
     public function __construct(
-        \Resque $resque,
+        QueueInterface $queue,
         PushInterface $integration
     ) {
 
-        $this->resque = $resque;
+        $this->queue = $queue;
         $this->integration = $integration;
     }
 
     /**
      * @inheritdoc
-     * @todo how do we know the lastUpdated?
      */
     function run(array $references = null)
     {
         if (! $references) {
-            $references = $this->integration->fetchChangedReferences($lastUpdated);
+            $references = $this->integration->fetchChangedReferences();
         }
 
+        //TODO this part should be async as well..
+
         foreach (array_chunk($references, $this->integration::batchSize()) as $chunkIds) {
-            $entities = $this->integration->fetch($chunkIds);
+            $entities = $this->integration->fetch($chunkIds); //MagentoCustomer
             foreach ($entities as $entity) {
-                $this->resque::enqueue('connector-lib', get_class($this->integration), ['entity' => $entity]);
+                $this->enqueue($entity);
             }
         }
+    }
+
+    function enqueue($entity) {
+        return $this->queue->enqueue(get_class($this->integration), ['entity' => $entity]);
     }
 }

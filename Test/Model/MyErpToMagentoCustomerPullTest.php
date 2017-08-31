@@ -30,7 +30,6 @@ class MyErpToMagentoCustomerPullTest implements PullInterface
     function fetchAllReferences(): array
     {
         return ["1","2","3","4","5"];
-        // TODO: Implement fetchAllReferences() method.
     }
 
     /**
@@ -46,7 +45,7 @@ class MyErpToMagentoCustomerPullTest implements PullInterface
     {
         return array_map(function ($item) {
             return [
-                'firstName' => "Paul" + $item,
+                'firstName' => "Paul" . $item,
                 "lastName" => "Hachmang",
                 "CustomerGroup" => "BUSINESSPOWERGROUP"
             ];
@@ -60,8 +59,11 @@ class MyErpToMagentoCustomerPullTest implements PullInterface
      */
     function perform()
     {
-        var_dump($this->args);
-        echo 'yeah!11';
+        $entity = $this->args['entity'];
+        var_dump($entity);
+
+//        throw new \Exception('Whoops');
+
         // TODO: Implement perform() method.
     }
 }

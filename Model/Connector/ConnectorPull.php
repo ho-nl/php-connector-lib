@@ -48,8 +48,12 @@ class ConnectorPull implements ConnectorPullInterface
         foreach (array_chunk($references, $this->integration::batchSize()) as $chunkIds) {
             $entities = $this->integration->fetch($chunkIds);
             foreach ($entities as $entity) {
-                $this->queue->enqueue(get_class($this->integration), ['entity' => $entity]);
+                $this->enqueue($entity);
             }
         }
+    }
+
+    function enqueue($entity) {
+        return $this->queue->enqueue(get_class($this->integration), ['entity' => $entity]);
     }
 }
