@@ -7,7 +7,7 @@
 namespace ReachDigital\PhpConnectorLib\Test\Model;
 
 
-use ReachDigital\PhpConnectorLib\Api\EntityTypeDirection\PullInterface;
+use ReachDigital\PhpConnectorLib\Api\IntegrationDirection\PullInterface;
 
 class MyErpToMagentoCustomerPullTest implements PullInterface
 {
@@ -16,7 +16,7 @@ class MyErpToMagentoCustomerPullTest implements PullInterface
      */
     static function batchSize()
     {
-        // TODO: Implement batchSize() method.
+        return 200;
     }
 
     /**
@@ -29,6 +29,7 @@ class MyErpToMagentoCustomerPullTest implements PullInterface
      */
     function fetchAllReferences(): array
     {
+        return ["1","2","3","4","5"];
         // TODO: Implement fetchAllReferences() method.
     }
 
@@ -43,7 +44,13 @@ class MyErpToMagentoCustomerPullTest implements PullInterface
      */
     function fetch(array $externalReferences): array
     {
-        // TODO: Implement fetch() method.
+        return array_map(function ($item) {
+            return [
+                'firstName' => "Paul" + $item,
+                "lastName" => "Hachmang",
+                "CustomerGroup" => "BUSINESSPOWERGROUP"
+            ];
+        }, $externalReferences);
     }
 
     /**
@@ -53,6 +60,8 @@ class MyErpToMagentoCustomerPullTest implements PullInterface
      */
     function perform()
     {
+        var_dump($this->args);
+        echo 'yeah!11';
         // TODO: Implement perform() method.
     }
 }

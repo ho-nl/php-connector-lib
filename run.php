@@ -16,13 +16,13 @@ $connectorPool = new \ReachDigital\PhpConnectorLib\Model\ConnectorPool();
 $queue = new \ReachDigital\PhpConnectorLib\Test\Model\FakeQueue();
 
 //Registering the connectors
-$customerPullTestRunner = new \ReachDigital\PhpConnectorLib\Model\PullConnector(
+$customerPullTestRunner = new \ReachDigital\PhpConnectorLib\Model\ConnectorType\CustomerPullConnector(
     $queue,
     new \ReachDigital\PhpConnectorLib\Test\Model\MyErpToMagentoCustomerPullTest()
 );
 $connectorPool->register($customerPullTestRunner);
 
-$customerPullTestRunner = new \ReachDigital\PhpConnectorLib\Model\PullConnector(
+$customerPullTestRunner = new \ReachDigital\PhpConnectorLib\Model\ConnectorType\CustomerPullConnector(
     $queue,
     new \ReachDigital\PhpConnectorLib\Test\Model\MyErpToMagentoCustomerChangedPullTest()
 );

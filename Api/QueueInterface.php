@@ -8,7 +8,7 @@ namespace ReachDigital\PhpConnectorLib\Api;
 
 
 /**
- * Class QueueInterface
+ * Interface QueueInterface
  * @package ReachDigital\PhpConnectorLib\Api
  */
 interface QueueInterface

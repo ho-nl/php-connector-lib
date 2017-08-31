@@ -17,7 +17,9 @@ class FakeQueue implements QueueInterface
     {
         $job = new \Resque_Job('connector', [
             'class' => $class,
-            'args' => $args
+            'args' => [
+                $args
+            ]
         ]);
         $job->perform();
     }

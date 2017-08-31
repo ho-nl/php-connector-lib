@@ -6,6 +6,8 @@
 
 namespace ReachDigital\PhpConnectorLib\Api;
 
+use ReachDigital\PhpConnectorLib\Api\Connector\ConnectorInterface;
+
 interface ConnectorPoolInterface
 {
     /**

@@ -4,7 +4,7 @@
  * See LICENSE.txt for license details.
  */
 
-namespace ReachDigital\PhpConnectorLib\Api;
+namespace ReachDigital\PhpConnectorLib\Api\Connector;
 
 /**
  * Each Connector that is implemented should implement this ConnectorInterface which is then able to run each specific

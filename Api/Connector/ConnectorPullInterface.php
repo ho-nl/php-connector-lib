@@ -4,7 +4,7 @@
  * See LICENSE.txt for license details.
  */
 
-namespace ReachDigital\PhpConnectorLib\Api;
+namespace ReachDigital\PhpConnectorLib\Api\Connector;
 
 /**
  * Interface ConnectorPushInterface

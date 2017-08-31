@@ -6,8 +6,7 @@
 
 namespace ReachDigital\PhpConnectorLib\Test\Model;
 
-
-use ReachDigital\PhpConnectorLib\Api\EntityTypeDirection\PullChangedInterface;
+use ReachDigital\PhpConnectorLib\Api\IntegrationDirection\PullChangedInterface;
 
 class MyErpToMagentoCustomerChangedPullTest
     extends MyErpToMagentoCustomerPullTest
@@ -19,11 +18,10 @@ class MyErpToMagentoCustomerChangedPullTest
      * Usage: Used in combination with fetchCustomers to create batches
      * which in turn can be processed in the queue.
      *
-     * @param \DateTime $date
      * @return array|\string[] List of external references
      */
-    function fetchChangedReferences(\DateTime $date): array
+    function fetchChangedReferences(): array
     {
-        // TODO: Implement fetchChangedReferences() method.
+        return ["4","5"];
     }
 }

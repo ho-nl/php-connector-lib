@@ -6,7 +6,7 @@
 
 namespace ReachDigital\PhpConnectorLib\Api\ConnectorType;
 
-use ReachDigital\PhpConnectorLib\Api\ConnectorPullInterface;
+use ReachDigital\PhpConnectorLib\Api\Connector\ConnectorPullInterface;
 
 interface ProductPullConnectorInterface extends ConnectorPullInterface {
 }

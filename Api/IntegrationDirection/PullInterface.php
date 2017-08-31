@@ -4,8 +4,7 @@
  * See LICENSE.txt for license details.
  */
 
-namespace ReachDigital\PhpConnectorLib\Api\EntityTypeDirection;
-
+namespace ReachDigital\PhpConnectorLib\Api\IntegrationDirection;
 
 /**
  * Basic functionality to pull Entities from the External System into the Internal System.

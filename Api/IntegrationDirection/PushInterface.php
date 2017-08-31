@@ -4,7 +4,7 @@
  * See LICENSE.txt for license details.
  */
 
-namespace ReachDigital\PhpConnectorLib\Api\EntityTypeDirection;
+namespace ReachDigital\PhpConnectorLib\Api\IntegrationDirection;
 
 /**
  * Push Customer from Magento to External System.

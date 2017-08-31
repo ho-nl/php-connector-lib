@@ -4,7 +4,7 @@
  * See LICENSE.txt for license details.
  */
 
-namespace ReachDigital\PhpConnectorLib\Api\EntityTypeDirection;
+namespace ReachDigital\PhpConnectorLib\Api\IntegrationDirection;
 
 
 interface PullChangedInterface extends PullInterface
@@ -15,8 +15,7 @@ interface PullChangedInterface extends PullInterface
      * Usage: Used in combination with fetchCustomers to create batches
      * which in turn can be processed in the queue.
      *
-     * @param \DateTime $date
      * @return array|\string[] List of external references
      */
-    function fetchChangedReferences(\DateTime $date): array;
+    function fetchChangedReferences(): array;
 }
