@@ -7,11 +7,10 @@
 namespace ReachDigital\PhpConnectorLib\Test\Model;
 
 
-use ReachDigital\PhpConnectorLib\Api\EntityType\CustomerPullInterface;
+use ReachDigital\PhpConnectorLib\Api\EntityTypeDirection\PullInterface;
 
-class MyErpToMagentoCustomerPullTest implements CustomerPullInterface
+class MyErpToMagentoCustomerPullTest implements PullInterface
 {
-
     /**
      * @return int
      */

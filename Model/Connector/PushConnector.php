@@ -6,10 +6,10 @@
 
 namespace ReachDigital\PhpConnectorLib\Model;
 
+use ReachDigital\PhpConnectorLib\Api\ConnectorPushInterface;
 use ReachDigital\PhpConnectorLib\Api\EntityTypeDirection\PushInterface;
-use ReachDigital\PhpConnectorLib\Api\ConnectorInterface;
 
-class PushConnector implements ConnectorInterface
+class PushConnector implements ConnectorPushInterface
 {
     /**
      * @var \Resque

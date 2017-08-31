@@ -7,11 +7,11 @@
 namespace ReachDigital\PhpConnectorLib\Test\Model;
 
 
-use ReachDigital\PhpConnectorLib\Api\EntityType\CustomerPullChangedInterface;
+use ReachDigital\PhpConnectorLib\Api\EntityTypeDirection\PullChangedInterface;
 
 class MyErpToMagentoCustomerChangedPullTest
     extends MyErpToMagentoCustomerPullTest
-    implements CustomerPullChangedInterface
+    implements PullChangedInterface
 {
     /**
      * Get a list of all external references.

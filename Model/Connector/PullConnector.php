@@ -6,29 +6,29 @@
 
 namespace ReachDigital\PhpConnectorLib\Model;
 
+use ReachDigital\PhpConnectorLib\Api\ConnectorPullInterface;
 use ReachDigital\PhpConnectorLib\Api\EntityTypeDirection\PullChangedInterface;
 use ReachDigital\PhpConnectorLib\Api\EntityTypeDirection\PullInterface;
-use ReachDigital\PhpConnectorLib\Api\EntityTypeDirection\PushInterface;
-use ReachDigital\PhpConnectorLib\Api\ConnectorInterface;
+use ReachDigital\PhpConnectorLib\Api\QueueInterface;
 
-class PullConnector implements ConnectorInterface
+class PullConnector implements ConnectorPullInterface
 {
     /**
-     * @var \Resque
-     */
-    private $resque;
-    /**
-     * @var PushInterface
+     * @var PullInterface
      */
     private $connector;
 
+    /**
+     * @var QueueInterface
+     */
+    private $queue;
+
     public function __construct(
-        \Resque $resque,
+        QueueInterface $queue,
         PullInterface $connector
     ) {
-
-        $this->resque = $resque;
         $this->connector = $connector;
+        $this->queue = $queue;
     }
 
     /**
@@ -45,8 +45,7 @@ class PullConnector implements ConnectorInterface
         foreach (array_chunk($ids, $this->connector::batchSize()) as $chunkIds) {
             $entities = $this->connector->fetch($chunkIds);
             foreach ($entities as $entity) {
-                //@todo make the queue name dynamic?
-                $this->resque::enqueue('connector', get_class($this->connector), ['entity' => $entity]);
+                $this->queue->enqueue(get_class($this->connector), ['entity' => $entity]);
             }
         }
     }
