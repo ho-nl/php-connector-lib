@@ -10,6 +10,9 @@
         }
     ],
     "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": { "\\ReachDigital\\PhpConnectorLib": "./" }
+    },
     "require": {
         "chrisboulton/php-resque": "1.2.x"
     }
