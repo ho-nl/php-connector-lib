@@ -33,8 +33,11 @@ class Runner {
 
 
     function enqueue($type = null, $entity) {
+        $result = [];
         foreach ($this->connectorPool->getConnectors($type) as $connector) {
-            $connector->enqueue($entity);
+            $result[$type] = $connector->enqueue($entity);
         }
+
+        return $result;
     }
 }

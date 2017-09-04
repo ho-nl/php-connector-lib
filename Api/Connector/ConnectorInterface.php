@@ -26,7 +26,7 @@ interface ConnectorInterface
     /**
      * Queues a single entity
      * @param mixed $entity
-     * @return void
+     * @return mixed
      */
     function enqueue($entity);
 }

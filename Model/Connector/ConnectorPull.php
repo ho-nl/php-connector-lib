@@ -53,6 +53,10 @@ class ConnectorPull implements ConnectorPullInterface
         }
     }
 
+    /**
+     * @param mixed $entity
+     * @return string
+     */
     function enqueue($entity) {
         return $this->queue->enqueue(get_class($this->integration), ['entity' => $entity]);
     }
