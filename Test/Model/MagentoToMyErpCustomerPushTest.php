@@ -6,7 +6,6 @@
 
 namespace ReachDigital\PhpConnectorLib\Test\Model;
 
-
 use ReachDigital\PhpConnectorLib\Api\IntegrationDirection\PushInterface;
 
 class MagentoToMyErpCustomerPushTest implements PushInterface
@@ -58,6 +57,21 @@ class MagentoToMyErpCustomerPushTest implements PushInterface
     function fetch(array $internalReferences): array
     {
         // TODO: Implement fetch() method.
+    }
+
+    function setUp()
+    {
+        \ReachDigital_PhpConnectorLib_Model_Bootstrap::setUp();
+    }
+
+    function tearDown()
+    {
+        // TODO: Implement tearDown() method.
+    }
+
+    function entityHash($entityData)
+    {
+        // TODO: Implement entityHash() method.
     }
 
     /**

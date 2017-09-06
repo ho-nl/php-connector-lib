@@ -21,6 +21,8 @@ class FakeQueue implements QueueInterface
                 $args
             ]
         ]);
+//        set up
         $job->perform();
+//         tear down
     }
 }

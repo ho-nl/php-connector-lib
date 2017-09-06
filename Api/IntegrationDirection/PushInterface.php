@@ -50,6 +50,17 @@ interface PushInterface
     function fetch(array $internalReferences): array;
 
     /**
+     * Trigger: Method called by resque before the perform method is called.
+     *
+     * Used to bootstrap the system so everything works.
+     */
+    function setUp();
+
+    function tearDown();
+
+    function entityHash($entity);
+
+    /**
      * Trigger: Method called by resque, data is available as $this->args
      *
      * Update an EntityType in the External System from the data of the Internal System.

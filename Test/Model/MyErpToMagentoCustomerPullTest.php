@@ -6,7 +6,6 @@
 
 namespace ReachDigital\PhpConnectorLib\Test\Model;
 
-
 use ReachDigital\PhpConnectorLib\Api\IntegrationDirection\PullInterface;
 
 class MyErpToMagentoCustomerPullTest implements PullInterface
@@ -50,6 +49,26 @@ class MyErpToMagentoCustomerPullTest implements PullInterface
                 "CustomerGroup" => "BUSINESSPOWERGROUP"
             ];
         }, $externalReferences);
+    }
+
+    /**
+     * Trigger: Method called by resque before the perform method is called.
+     *
+     * Used to bootstrap the system so everything works.
+     */
+    function setUp()
+    {
+        // TODO: Implement setUp() method.
+    }
+
+    function tearDown()
+    {
+        // TODO: Implement tearDown() method.
+    }
+
+    function entityHash($entity)
+    {
+        // TODO: Implement entityHash() method.
     }
 
     /**

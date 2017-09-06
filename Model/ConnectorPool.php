@@ -6,13 +6,20 @@
 
 namespace ReachDigital\PhpConnectorLib\Model;
 
-
 use ReachDigital\PhpConnectorLib\Api\Connector\ConnectorInterface;
 use ReachDigital\PhpConnectorLib\Api\ConnectorPoolInterface;
 
 class ConnectorPool implements ConnectorPoolInterface
 {
+    /**
+     * @var ConnectorInterface[]
+     */
     private $connectors;
+
+    /**
+     * @var $this
+     */
+    private static $instance;
 
     /**
      * @inheritdoc
@@ -34,5 +41,15 @@ class ConnectorPool implements ConnectorPoolInterface
         return array_filter($this->connectors, function($connector) use ($type) {
             return $connector instanceof $type;
         });
+    }
+
+    /**
+     * @inheritdoc
+     */
+    static function getInstance() {
+        if (self::$instance === null) {
+            self::$instance = new self;
+        }
+        return self::$instance;
     }
 }

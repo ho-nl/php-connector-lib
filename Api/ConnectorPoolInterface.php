@@ -21,4 +21,9 @@ interface ConnectorPoolInterface
      * @return ConnectorInterface[]
      */
     function getConnectors(string $type = null): array;
+
+    /**
+     * @return ConnectorPoolInterface
+     */
+    static function getInstance();
 }

@@ -15,11 +15,13 @@ class Runner {
     private $connectorPool;
 
     public function __construct(
-        ConnectorPoolInterface $connectorPool
+        ConnectorPoolInterface $connectorPool = null
     ) {
+        if ($connectorPool === null) {
+            $connectorPool =  \ReachDigital\PhpConnectorLib\Model\ConnectorPool::getInstance();
+        }
         $this->connectorPool = $connectorPool;
     }
-
 
     /**
      * @param null $type
@@ -31,11 +33,10 @@ class Runner {
         }
     }
 
-
     function enqueue($type = null, $entity) {
         $result = [];
         foreach ($this->connectorPool->getConnectors($type) as $connector) {
-            $result[$type] = $connector->enqueue($entity);
+            $result[get_class($connector)] = $connector->enqueue($entity);
         }
 
         return $result;

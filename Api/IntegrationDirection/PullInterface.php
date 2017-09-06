@@ -44,4 +44,18 @@ interface PullInterface
      * Update an EntityType in the External System from the data of the Internal System.
      */
     function perform();
+
+
+    /**
+     * Trigger: Method called by resque before the perform method is called.
+     *
+     * Used to bootstrap the system so everything works.
+     */
+    function setUp();
+
+
+    function tearDown();
+
+
+    function entityHash($entity);
 }
