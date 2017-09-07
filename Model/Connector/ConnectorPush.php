@@ -52,9 +52,23 @@ class ConnectorPush implements ConnectorPushInterface
 
     /**
      * @param mixed $entity
-     * @return string
+     * @return bool|array
      */
-    function enqueue($entity) {
-        return $this->queue->enqueue(get_class($this->integration), ['entity' => $entity]);
+    function enqueue($entity)
+    {
+        $hash = $this->integration->entityHash($entity);
+        $previousHash = $this->integration->previousEntityHash($entity);
+
+        if ($hash == $previousHash) {
+            return false;
+        }
+
+        $jobId = $this->queue->enqueue(get_class($this->integration), ['entity' => $entity]);
+
+        return [
+            'jobId' => $jobId,
+            'hash'  => $hash,
+            'class' => get_class($this->integration),
+        ];
     }
 }

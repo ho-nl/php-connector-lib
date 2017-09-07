@@ -18,7 +18,7 @@ class Runner {
         ConnectorPoolInterface $connectorPool = null
     ) {
         if ($connectorPool === null) {
-            $connectorPool =  \ReachDigital\PhpConnectorLib\Model\ConnectorPool::getInstance();
+            $connectorPool = \ReachDigital\PhpConnectorLib\Model\ConnectorPool::getInstance();
         }
         $this->connectorPool = $connectorPool;
     }
@@ -27,13 +27,15 @@ class Runner {
      * @param null $type
      * @param array|null $references
      */
-    function run($type = null, array $references = null) {
+    function run($type = null, array $references = null)
+    {
         foreach ($this->connectorPool->getConnectors($type) as $connector) {
             $connector->run($references);
         }
     }
 
-    function enqueue($type = null, $entity) {
+    function enqueue($type = null, $entity)
+    {
         $result = [];
         foreach ($this->connectorPool->getConnectors($type) as $connector) {
             $result[get_class($connector)] = $connector->enqueue($entity);
