@@ -59,6 +59,14 @@ interface IntegrationInterface
     function previousEntityHash($entity);
 
     /**
+     * Returns the previously enqueued job ID
+     *
+     * @param mixed $entity
+     * @return string
+     */
+    function previousJobId($entity);
+
+    /**
      * Returns a fieldmapped array
      *
      * @param mixed $entity

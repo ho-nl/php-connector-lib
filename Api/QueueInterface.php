@@ -22,5 +22,23 @@ interface QueueInterface
    	 *
    	 * @return string
    	 */
-    public function enqueue($class, $args = null, $trackStatus = false);
+    public function enqueue($class, $args = null, $trackStatus = true);
+
+    /**
+     * @param string $class
+     * @param string $jobId
+     * @return mixed
+     */
+    public function dequeue($class, $jobId);
+
+    /**
+     * @return int|string
+     */
+    public function waitingStatus();
+
+    /**
+     * @param string $jobId
+     * @return int|string|bool
+     */
+    public function jobStatus($jobId);
 }

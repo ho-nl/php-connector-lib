@@ -63,6 +63,14 @@ class ConnectorPush implements ConnectorPushInterface
             return false;
         }
 
+        $jobId = $this->integration->previousJobId($entity);
+
+        $status = $this->queue->jobStatus($jobId);
+
+        if ($status == $this->queue->waitingStatus()) {
+            $this->queue->dequeue(get_class($this->integration), $jobId);
+        }
+
         $jobId = $this->queue->enqueue(get_class($this->integration), ['entity' => $entity]);
 
         return [
