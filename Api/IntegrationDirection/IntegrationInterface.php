@@ -58,6 +58,14 @@ interface IntegrationInterface
      */
     function previousEntityHash($entity);
 
+    /**
+     * Returns a fieldmapped array
+     *
+     * @param mixed $entity
+     * @return array
+     */
+    function fieldMap($entity);
+
 
     /*============= @todo mixed responsibilities of this class? */
 
