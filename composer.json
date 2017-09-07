@@ -14,6 +14,6 @@
         "psr-4": { "ReachDigital\\PhpConnectorLib\\": "./" }
     },
     "require": {
-        "chrisboulton/php-resque": "1.2.x"
+        "chrisboulton/php-resque": "dev-master"
     }
 }
