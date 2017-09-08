@@ -41,4 +41,16 @@ interface QueueInterface
      * @return int|string|bool
      */
     public function jobStatus($jobId);
+
+    /**
+     * Returns an array with the internal status (IDs) as keys, and the user-friendly labels as values
+     * For example:
+     * [
+     *  1 => 'Pending',
+     *  2 => 'Complete',
+     * ]
+     *
+     * @return array
+     */
+    public function statusMapping();
 }
