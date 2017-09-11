@@ -46,3 +46,9 @@ composer require reach-digital/php-connector-lib
 ```
 QUEUE=* VERBOSE=1 APP_INCLUDE=vendor/autoload.php php vendor/chrisboulton/php-resque/resque.php
 ```
+
+## Logging
+
+```
+@TODO Create proper logging for QUEUE log
+```
