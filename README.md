@@ -1,12 +1,34 @@
-## Reach Digital PHP Connector Library
+# Reach Digital PHP Connector Library
 
+## Goals
+- Be able to build connectors for Third Party systems like NetSuite or MailChimp
+- Be able to integrate the connectors with internal systems like Magento 1 or Magento 2.
+- Increase the resiliance of the connectors build
+- Increase the development velocity of the connectors build
+
+## Concepts
+- The library is a pure PHP library and therefor compatble with any platform that runs on PHP.
+- The library implements a queueing system ([Resque](https://github.com/chrisboulton/php-resque)) that allows us to:
+  - Resilient error handling: Each request runs in it's own environment. When a single request fails other requests are handled properly.
+  - Status handling: Each job that is created has it's own status which can be displayed which can be [tracked](https://github.com/chrisboulton/php-resque#tracking-job-statuses).
+  
+ 
 ## Technical design:
-- Connect Third Party systems like NetSuite or MailChimp to Magento 1 or Magento 2.
-- Be able to handle hundreds of thousands of requests without any issue.
-- Use Redis as a queueing system to be able to track all these requests.
+
+- **Entity**: Customer, Order, Invoice, Shipment, CreditMemo, Product, Inventory Item, etc.
+- **ConnectorType**: The full connector which wraps the specific integration.
+- **IntegrationType**: Implementation for a specific ConnectorType with a different system: MyERPToMagentoCustomerPush.
+
+```php
+<?php
+$customerPullTestRunner = new \ReachDigital\PhpConnectorLib\Model\ConnectorType\CustomerPullConnector(
+    $queue,
+    new \ReachDigital\PhpConnectorLib\Test\Model\MyErpToMagentoCustomerPullTest() //Implemented specifically for each system.
+);
+```
 
 ### Queue
-A que is a FIFO (First In, First Out) data structure, which allows us to enqueue thousands of items in a fraction of a
+A queue is a FIFO (First In, First Out) data structure, which allows us to enqueue thousands of items in a fraction of a
 second and handle them via threads on the system at a later moment.
 
 The library used to achieve this is the very simple [Resque](https://github.com/chrisboulton/php-resque) library. The
@@ -19,13 +41,7 @@ composer config repositories.reach-digital/php-connector-lib vcs git@github.com:
 composer require reach-digital/php-connector-lib
 ```
 
-## Terminology:
-
-- **ConnectorType**: The full connector which wraps the specific integration.
-- **IntegrationType**: Implementation for a specific ConnectorType with a different system: MyERPToMagentoCustomerPush.
-
-
-## 
+## Starting the queue
 
 ```
 QUEUE=* VERBOSE=1 APP_INCLUDE=vendor/autoload.php php vendor/chrisboulton/php-resque/resque.php
