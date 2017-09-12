@@ -14,15 +14,15 @@ namespace ReachDigital\PhpConnectorLib\Api;
 interface QueueInterface
 {
     /**
-   	 * Create a new job and save it to the specified queue.
-   	 *
-   	 * @param string $class The name of the class that contains the code to execute the job.
-   	 * @param array $args Any optional arguments that should be passed when the job is executed.
-   	 * @param boolean $trackStatus Set to true to be able to monitor the status of a job.
-   	 *
-   	 * @return string
-   	 */
-    public function enqueue($class, $args = null, $trackStatus = true);
+     * Create a new job and save it to the specified queue.
+     *
+     * @param string $class The name of the class that contains the code to execute the job.
+     * @param string $entityId
+     * @param mixed $entity Serializable Entity as payload for the jon
+     * @param string $hash
+     * @return string
+     */
+    public function enqueue($class, string $entityId, $entity, string $hash);
 
     /**
      * @param string $class

@@ -14,9 +14,9 @@ class ResqueQueue implements QueueInterface
     /**
      * @inheritdoc
      */
-    public function enqueue($class, $args = null, $trackStatus = true)
+    public function enqueue($class, string $entityId, $entity, string $hash)
     {
-        return \Resque::enqueue('connector', $class, $args, $trackStatus);
+        return \Resque::enqueue('connector', $class, ['entity' => $entity, 'hash' => $hash], true);
     }
 
     /**

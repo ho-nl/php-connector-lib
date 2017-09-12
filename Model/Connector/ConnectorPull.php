@@ -56,10 +56,10 @@ class ConnectorPull implements ConnectorPullInterface
      * @param mixed $entity
      * @return string
      */
-    function enqueue($entity) {
-        $this->integration->entityHash($entity); //TODO compare with the previous value, if changed, enqueue.
-        //The QueueInterface should probably provide a method to get the entityHash of the previous job.
+    function enqueue($entity)
+    {
+        $hash = $this->integration->entityHash($entity);
 
-        return $this->queue->enqueue(get_class($this->integration), ['entity' => $entity]);
+        return $this->queue->enqueue(get_class($this->integration), $this->integration->entityId($entity), $entity, $hash);
     }
 }
