@@ -26,12 +26,15 @@ class Runner {
     /**
      * @param null $type
      * @param array|null $references
+     * @return array
      */
     function run($type = null, array $references = null)
     {
+        $result = [];
         foreach ($this->connectorPool->getConnectors($type) as $connector) {
-            $connector->run($references);
+            $result[get_class($connector)] = $connector->run($references);
         }
+        return $result;
     }
 
     function enqueue($type = null, $entity)

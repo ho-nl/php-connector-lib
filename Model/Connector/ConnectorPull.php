@@ -33,7 +33,6 @@ class ConnectorPull implements ConnectorPullInterface
 
     /**
      * @inheritdoc
-     * @todo how do we know the lastUpdated?
      */
     function run(array $references = null)
     {
