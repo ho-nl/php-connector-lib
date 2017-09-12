@@ -6,7 +6,7 @@
 
 namespace ReachDigital\PhpConnectorLib\Model;
 
-use ReachDigital\PhpConnectorLib\Api\Connector\ConnectorInterface;
+use ReachDigital\PhpConnectorLib\Api\ConnectorInterface;
 use ReachDigital\PhpConnectorLib\Api\ConnectorPoolInterface;
 
 class ConnectorPool implements ConnectorPoolInterface

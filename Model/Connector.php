@@ -4,13 +4,14 @@
  * See LICENSE.txt for license details.
  */
 
-namespace ReachDigital\PhpConnectorLib\Model\Connector;
+namespace ReachDigital\PhpConnectorLib\Model;
 
-use ReachDigital\PhpConnectorLib\Api\Connector\ConnectorPushInterface;
-use ReachDigital\PhpConnectorLib\Api\IntegrationDirection\PushInterface;
+use ReachDigital\PhpConnectorLib\Api\ConnectorInterface;
+use ReachDigital\PhpConnectorLib\Api\IntegrationDirection\IntegrationInterface;
+use ReachDigital\PhpConnectorLib\Api\IntegrationDirection\IntegrationChangedInterface;
 use ReachDigital\PhpConnectorLib\Api\QueueInterface;
 
-class ConnectorPush implements ConnectorPushInterface
+class Connector implements ConnectorInterface
 {
     /**
      * @var QueueInterface
@@ -18,13 +19,13 @@ class ConnectorPush implements ConnectorPushInterface
     private $queue;
 
     /**
-     * @var PushInterface
+     * @var IntegrationInterface
      */
     private $integration;
 
     public function __construct(
         QueueInterface $queue,
-        PushInterface $integration
+        IntegrationInterface $integration
     ) {
 
         $this->queue = $queue;
@@ -37,10 +38,13 @@ class ConnectorPush implements ConnectorPushInterface
     function run(array $references = null)
     {
         if (! $references) {
-            $references = $this->integration->fetchChangedReferences();
+            // @todo changed
+            if ($this->integration instanceof IntegrationChangedInterface) {
+                $references = $this->integration->fetchChangedReferences();
+            } else {
+                $references = $this->integration->fetchAllReferences();
+            }
         }
-
-        //TODO this part should be async as well..
 
         foreach (array_chunk($references, $this->integration::batchSize()) as $chunkIds) {
             $entities = $this->integration->fetch($chunkIds); //MagentoCustomer

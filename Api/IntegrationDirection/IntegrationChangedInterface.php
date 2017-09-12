@@ -7,7 +7,7 @@
 namespace ReachDigital\PhpConnectorLib\Api\IntegrationDirection;
 
 
-interface PullChangedInterface extends PullInterface
+interface IntegrationChangedInterface extends IntegrationInterface
 {
     /**
      * Get a list of all external references.

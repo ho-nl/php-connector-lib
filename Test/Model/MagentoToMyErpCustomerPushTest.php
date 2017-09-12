@@ -6,9 +6,9 @@
 
 namespace ReachDigital\PhpConnectorLib\Test\Model;
 
-use ReachDigital\PhpConnectorLib\Api\IntegrationDirection\PushInterface;
+use ReachDigital\PhpConnectorLib\Api\IntegrationDirection\IntegrationInterface;
 
-class MagentoToMyErpCustomerPushTest implements PushInterface
+class MagentoToMyErpCustomerPushTest implements IntegrationInterface
 {
     /**
      * @return int
