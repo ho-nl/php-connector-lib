@@ -38,7 +38,6 @@ class Connector implements ConnectorInterface
     function run(array $references = null)
     {
         if (! $references) {
-            // @todo changed
             if ($this->integration instanceof IntegrationChangedInterface) {
                 $references = $this->integration->fetchChangedReferences();
             } else {
@@ -47,7 +46,7 @@ class Connector implements ConnectorInterface
         }
 
         foreach (array_chunk($references, $this->integration::batchSize()) as $chunkIds) {
-            $entities = $this->integration->fetch($chunkIds); //MagentoCustomer
+            $entities = $this->integration->fetch($chunkIds);
             foreach ($entities as $entity) {
                 $this->enqueue($entity);
             }
