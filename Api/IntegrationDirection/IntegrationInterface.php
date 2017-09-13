@@ -34,6 +34,23 @@ interface IntegrationInterface
      */
     function fetch(array $externalReferences): array;
 
+    /**
+     * Build an object from the given array
+     * Used to rebuild an object when running an enqueued job, with the given argument array
+     *
+     * @param array $data
+     * @return Object
+     */
+    function buildObject(array $data);
+
+    /**
+     * Build an array from the given object
+     * Used to pass an object as array to the queue
+     *
+     * @param Object $object
+     * @return array
+     */
+    function buildArray($object);
 
     /**
      * Returns a unique hash for the current entity.

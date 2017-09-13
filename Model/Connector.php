@@ -74,6 +74,11 @@ class Connector implements ConnectorInterface
             $this->queue->dequeue(get_class($this->integration), $jobId);
         }
 
-        return $this->queue->enqueue(get_class($this->integration), $this->integration->entityId($entity), $entity, $hash);
+        return $this->queue->enqueue(
+            get_class($this->integration),
+            $this->integration->entityId($entity),
+            $this->integration->buildArray($entity),
+            $hash
+        );
     }
 }
