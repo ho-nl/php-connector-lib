@@ -35,7 +35,7 @@ class Connector implements ConnectorInterface
     /**
      * @inheritdoc
      */
-    function run(array $references = null)
+    function run(array $references = null, bool $forceEnqueue = false)
     {
         if (! $references) {
             if ($this->integration instanceof IntegrationChangedInterface) {
@@ -48,21 +48,20 @@ class Connector implements ConnectorInterface
         foreach (array_chunk($references, $this->integration::batchSize()) as $chunkIds) {
             $entities = $this->integration->fetch($chunkIds);
             foreach ($entities as $entity) {
-                $this->enqueue($entity);
+                $this->enqueue($entity, $forceEnqueue);
             }
         }
     }
 
     /**
-     * @param mixed $entity
-     * @return bool|array
+     * @inheritdoc
      */
-    function enqueue($entity)
+    function enqueue($entity, bool $forceEnqueue = false)
     {
         $hash = $this->integration->entityHash($entity);
         $previousHash = $this->integration->previousEntityHash($entity);
 
-        if ($hash == $previousHash) {
+        if ($hash == $previousHash && !$forceEnqueue) {
             return false;
         }
 
