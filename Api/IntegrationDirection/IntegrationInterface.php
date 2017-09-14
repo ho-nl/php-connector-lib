@@ -9,6 +9,11 @@ namespace ReachDigital\PhpConnectorLib\Api\IntegrationDirection;
 interface IntegrationInterface
 {
     /**
+     * @return string
+     */
+    function entityType();
+
+    /**
      * @return int
      */
     static function batchSize();
