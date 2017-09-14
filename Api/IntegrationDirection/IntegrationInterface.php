@@ -41,7 +41,7 @@ interface IntegrationInterface
      * @param array $data
      * @return Object
      */
-    function buildObject(array $data);
+    function unpackEntity(array $data);
 
     /**
      * Build an array from the given object
@@ -50,7 +50,7 @@ interface IntegrationInterface
      * @param Object $object
      * @return array
      */
-    function buildArray($object);
+    function packEntity($object);
 
     /**
      * Returns a unique hash for the current entity.

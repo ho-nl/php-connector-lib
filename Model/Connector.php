@@ -76,7 +76,7 @@ class Connector implements ConnectorInterface
         return $this->queue->enqueue(
             get_class($this->integration),
             $this->integration->entityId($entity),
-            $this->integration->buildArray($entity),
+            $this->integration->packEntity($entity),
             $hash
         );
     }
