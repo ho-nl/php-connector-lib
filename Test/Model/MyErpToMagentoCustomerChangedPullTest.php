@@ -6,7 +6,7 @@
 
 namespace ReachDigital\PhpConnectorLib\Test\Model;
 
-use ReachDigital\PhpConnectorLib\Api\IntegrationDirection\PullChangedInterface;
+use ReachDigital\PhpConnectorLib\Api\PullChangedInterface;
 
 class MyErpToMagentoCustomerChangedPullTest
     extends MyErpToMagentoCustomerPullTest

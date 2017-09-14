@@ -4,7 +4,7 @@
  * See LICENSE.txt for license details.
  */
 
-namespace ReachDigital\PhpConnectorLib\Api\IntegrationDirection;
+namespace ReachDigital\PhpConnectorLib\Api;
 
 
 interface IntegrationChangedInterface extends IntegrationInterface

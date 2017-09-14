@@ -7,8 +7,8 @@
 namespace ReachDigital\PhpConnectorLib\Model;
 
 use ReachDigital\PhpConnectorLib\Api\ConnectorInterface;
-use ReachDigital\PhpConnectorLib\Api\IntegrationDirection\IntegrationInterface;
-use ReachDigital\PhpConnectorLib\Api\IntegrationDirection\IntegrationChangedInterface;
+use ReachDigital\PhpConnectorLib\Api\IntegrationInterface;
+use ReachDigital\PhpConnectorLib\Api\IntegrationChangedInterface;
 use ReachDigital\PhpConnectorLib\Api\QueueInterface;
 
 class Connector implements ConnectorInterface
