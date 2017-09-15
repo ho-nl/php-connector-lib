@@ -14,19 +14,14 @@ interface IntegrationInterface
     function entityType();
 
     /**
-     * @return int
-     */
-    static function batchSize();
-
-    /**
      * Get a list of all external references.
      *
      * Usage: Used in combination with fetchCustomers to create batches
      * which in turn can be processed in the queue.
      *
-     * @return string[] List of external references
+     * @return \Generator List of external references
      */
-    function fetchAllReferences(): array;
+    function fetchAll();
 
     /**
      * Fetch data for customers.
@@ -35,9 +30,9 @@ interface IntegrationInterface
      * to be processed later.
      *
      * @param array $externalReferences
-     * @return mixed[] List of External System objects
+     * @return \Generator List of External System objects
      */
-    function fetch(array $externalReferences): array;
+    function fetch(array $externalReferences);
 
     /**
      * Build an object from the given array

@@ -6,7 +6,6 @@
 
 namespace ReachDigital\PhpConnectorLib\Api;
 
-
 interface IntegrationChangedInterface extends IntegrationInterface
 {
     /**
@@ -17,5 +16,5 @@ interface IntegrationChangedInterface extends IntegrationInterface
      *
      * @return array|\string[] List of external references
      */
-    function fetchChangedReferences(): array;
+    function fetchChanged(): array;
 }

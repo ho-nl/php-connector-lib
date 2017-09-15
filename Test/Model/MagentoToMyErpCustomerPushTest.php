@@ -11,14 +11,6 @@ use ReachDigital\PhpConnectorLib\Api\IntegrationInterface;
 class MagentoToMyErpCustomerPushTest implements IntegrationInterface
 {
     /**
-     * @return int
-     */
-    static function batchSize()
-    {
-        return 200;
-    }
-
-    /**
      * Get a list of all internal references.
      *
      * Usage: Used in combination with fetchCustomers to create batches

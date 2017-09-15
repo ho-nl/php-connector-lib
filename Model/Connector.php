@@ -39,17 +39,18 @@ class Connector implements ConnectorInterface
     {
         if (! $references) {
             if ($this->integration instanceof IntegrationChangedInterface) {
-                $references = $this->integration->fetchChangedReferences();
+                $items = $this->integration->fetchChanged();
             } else {
-                $references = $this->integration->fetchAllReferences();
+                $items = $this->integration->fetchAll();
             }
         }
+        else {
+            /** @var \Generator $items */
+            $items = $this->integration->fetch($references);
+        }
 
-        foreach (array_chunk($references, $this->integration::batchSize()) as $chunkIds) {
-            $entities = $this->integration->fetch($chunkIds);
-            foreach ($entities as $entity) {
-                $this->enqueue($entity, $forceEnqueue);
-            }
+        foreach ($items as $item) {
+            $this->enqueue($item, $forceEnqueue);
         }
     }
 
