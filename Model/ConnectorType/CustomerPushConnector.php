@@ -11,5 +11,15 @@ use ReachDigital\PhpConnectorLib\Model\Connector;
 
 class CustomerPushConnector
     extends Connector
-    implements CustomerPushConnectorInterface {
+    implements CustomerPushConnectorInterface
+{
+    function getName(): string
+    {
+        return 'customer';
+    }
+
+    function getType(): string
+    {
+        return 'push';
+    }
 }

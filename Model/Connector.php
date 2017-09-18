@@ -11,7 +11,7 @@ use ReachDigital\PhpConnectorLib\Api\IntegrationInterface;
 use ReachDigital\PhpConnectorLib\Api\IntegrationChangedInterface;
 use ReachDigital\PhpConnectorLib\Api\QueueInterface;
 
-class Connector implements ConnectorInterface
+abstract class Connector implements ConnectorInterface
 {
     /**
      * @var QueueInterface
@@ -76,6 +76,8 @@ class Connector implements ConnectorInterface
 
         return $this->queue->enqueue(
             get_class($this->integration),
+            $this->getName(),
+            $this->getType(),
             $this->integration->entityId($entity),
             $this->integration->packEntity($entity),
             $hash

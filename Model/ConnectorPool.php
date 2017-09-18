@@ -46,7 +46,8 @@ class ConnectorPool implements ConnectorPoolInterface
     /**
      * @inheritdoc
      */
-    static function getInstance() {
+    static function getInstance()
+    {
         if (self::$instance === null) {
             self::$instance = new self;
         }

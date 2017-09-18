@@ -15,6 +15,16 @@ namespace ReachDigital\PhpConnectorLib\Api;
 interface ConnectorInterface
 {
     /**
+     * @return string
+     */
+    function getName(): string;
+
+    /**
+     * @return string
+     */
+    function getType(): string;
+
+    /**
      * @param string[]|null $references List of references to be updated. When no argument is provided it is expected
      * by the Connector to **fully update all entities**. A performant way to implement this is by implementing
      * the PullChangedInterface and using that one.
