@@ -6,11 +6,12 @@
 
 namespace ReachDigital\PhpConnectorLib\Model;
 
-
 use ReachDigital\PhpConnectorLib\Api\QueueInterface;
 
 class ResqueQueue implements QueueInterface
 {
+    const STATUS_HISTORIC = 0;
+
     /**
      * @inheritdoc
      */
@@ -56,6 +57,41 @@ class ResqueQueue implements QueueInterface
             \Resque_Job_Status::STATUS_RUNNING  => 'Running',
             \Resque_Job_Status::STATUS_FAILED   => 'Failed',
             \Resque_Job_Status::STATUS_COMPLETE => 'Complete',
+            self::STATUS_HISTORIC               => 'Historic',
+        ];
+    }
+
+    /**
+     * @param array $statuses
+     * @return int
+     */
+    public function getCombinedStatus(array $statuses)
+    {
+        $shownStatus = self::STATUS_HISTORIC;
+
+        $statusOrder = $this->getStatusOrder();
+        foreach ($statuses as $status) {
+            if (!$shownStatus) {
+                $shownStatus = $status;
+                continue;
+            }
+
+            if (array_search($status, $statusOrder) < array_search($shownStatus, $statusOrder)) {
+                $shownStatus = $status;
+            }
+        }
+
+        return $shownStatus;
+    }
+
+    public function getStatusOrder()
+    {
+        return [
+            \Resque_Job_Status::STATUS_FAILED,
+            \Resque_Job_Status::STATUS_RUNNING,
+            \Resque_Job_Status::STATUS_WAITING,
+            \Resque_Job_Status::STATUS_COMPLETE,
+            self::STATUS_HISTORIC,
         ];
     }
 }
