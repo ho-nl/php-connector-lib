@@ -27,13 +27,14 @@ class Runner {
      * @param null $type
      * @param array|null $references
      * @param bool $forceQueue
+     * @param bool $forceAll
      * @return array
      */
-    function run($type = null, array $references = null, bool $forceQueue = false)
+    function run($type = null, array $references = null, bool $forceQueue = false, bool $forceAll = false)
     {
         $result = [];
         foreach ($this->connectorPool->getConnectors($type) as $connector) {
-            $result[get_class($connector)] = $connector->run($references, $forceQueue);
+            $result[get_class($connector)] = $connector->run($references, $forceQueue, $forceAll);
         }
         return $result;
     }

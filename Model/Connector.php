@@ -35,10 +35,10 @@ class Connector implements ConnectorInterface
     /**
      * @inheritdoc
      */
-    function run(array $references = null, bool $forceEnqueue = false)
+    function run(array $references = null, bool $forceEnqueue = false, bool $forceAll = false)
     {
         if (! $references) {
-            if ($this->integration instanceof IntegrationChangedInterface) {
+            if ($this->integration instanceof IntegrationChangedInterface && !$forceAll) {
                 $items = $this->integration->fetchChanged();
             } else {
                 $items = $this->integration->fetchAll();

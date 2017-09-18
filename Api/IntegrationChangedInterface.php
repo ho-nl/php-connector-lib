@@ -14,7 +14,7 @@ interface IntegrationChangedInterface extends IntegrationInterface
      * Usage: Used in combination with fetchCustomers to create batches
      * which in turn can be processed in the queue.
      *
-     * @return array|\string[] List of external references
+     * @return \Generator|bool List of external references
      */
-    function fetchChanged(): array;
+    function fetchChanged();
 }

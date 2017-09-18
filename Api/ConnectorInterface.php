@@ -19,9 +19,10 @@ interface ConnectorInterface
      * by the Connector to **fully update all entities**. A performant way to implement this is by implementing
      * the PullChangedInterface and using that one.
      * @param bool $forceEnqueue
+     * @param bool $forceAll
      * @return string Job ID
      */
-    function run(array $references = null, bool $forceEnqueue = false);
+    function run(array $references = null, bool $forceEnqueue = false, bool $forceAll = false);
 
 
     /**
