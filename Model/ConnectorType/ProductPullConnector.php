@@ -11,5 +11,15 @@ use ReachDigital\PhpConnectorLib\Model\Connector;
 
 class ProductPullConnector
     extends Connector
-    implements ProductPullConnectorInterface {
+    implements ProductPullConnectorInterface
+{
+    function getName(): string
+    {
+        return 'product';
+    }
+
+    function getType(): string
+    {
+        return 'pull';
+    }
 }
