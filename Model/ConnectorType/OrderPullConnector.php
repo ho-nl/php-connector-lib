@@ -11,5 +11,15 @@ use ReachDigital\PhpConnectorLib\Model\Connector;
 
 class OrderPullConnector
     extends Connector
-    implements OrderPullConnectorInterface {
+    implements OrderPullConnectorInterface
+{
+    function getName(): string
+    {
+        return 'order';
+    }
+
+    function getType(): string
+    {
+        return 'pull';
+    }
 }
