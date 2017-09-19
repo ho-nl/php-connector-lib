@@ -68,17 +68,21 @@ interface IntegrationInterface
     /**
      * Returns the previously successfully synced entity hash.
      * @param mixed $entity
+     * @param string $name
+     * @param string $type
      * @return string
      */
-    function previousEntityHash($entity);
+    function previousEntityHash($entity, string $name, string $type);
 
     /**
      * Returns the previously enqueued job ID
      *
      * @param mixed $entity
+     * @param string $name
+     * @param string $type
      * @return string
      */
-    function previousJobId($entity);
+    function previousJobId($entity, string $name, string $type);
 
     /**
      * Returns a fieldmapped array

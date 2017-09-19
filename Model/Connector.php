@@ -60,13 +60,13 @@ abstract class Connector implements ConnectorInterface
     function enqueue($entity, bool $forceEnqueue = false)
     {
         $hash = $this->integration->entityHash($entity);
-        $previousHash = $this->integration->previousEntityHash($entity);
+        $previousHash = $this->integration->previousEntityHash($entity, $this->getName(), $this->getType());
 
         if ($hash == $previousHash && !$forceEnqueue) {
             return false;
         }
 
-        $jobId = $this->integration->previousJobId($entity);
+        $jobId = $this->integration->previousJobId($entity, $this->getName(), $this->getType());
 
         $status = $this->queue->jobStatus($jobId);
 
