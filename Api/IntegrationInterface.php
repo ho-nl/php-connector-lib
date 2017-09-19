@@ -14,25 +14,22 @@ interface IntegrationInterface
     function entityType();
 
     /**
-     * Get a list of all external references.
+     * Get a list of all references.
      *
-     * Usage: Used in combination with fetchCustomers to create batches
-     * which in turn can be processed in the queue.
-     *
-     * @return \Generator|bool List of external references
+     * @return \Generator|bool List of references
      */
     function fetchAll();
 
     /**
-     * Fetch data for customers.
+     * Fetch data for given references
      *
-     * Usage: Fetch a list of customers which can then be put in the queue
+     * Usage: Fetch a list of entities which can then be put in the queue
      * to be processed later.
      *
-     * @param array $externalReferences
-     * @return \Generator List of External System objects
+     * @param array $references
+     * @return \Generator List of objects
      */
-    function fetch(array $externalReferences);
+    function fetch(array $references);
 
     /**
      * Build an object from the given array
@@ -105,7 +102,7 @@ interface IntegrationInterface
     /**
      * Trigger: Method called by resque, data is available as $this->args
      *
-     * Update an EntityType in the External System from the data of the Internal System.
+     * Update an EntityType in the internal or external system
      */
     function perform();
 
