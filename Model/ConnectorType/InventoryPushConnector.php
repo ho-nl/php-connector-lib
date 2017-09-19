@@ -11,5 +11,15 @@ use ReachDigital\PhpConnectorLib\Model\Connector;
 
 class InventoryPushConnector
     extends Connector
-    implements InventoryPushConnectorInterface {
+    implements InventoryPushConnectorInterface
+{
+    function getName(): string
+    {
+        return 'inventory';
+    }
+
+    function getType(): string
+    {
+        return 'push';
+    }
 }

@@ -11,5 +11,15 @@ use ReachDigital\PhpConnectorLib\Model\Connector;
 
 class CreditMemoPushConnector
     extends Connector
-    implements CreditMemoPushConnectorInterface {
+    implements CreditMemoPushConnectorInterface
+{
+    function getName(): string
+    {
+        return 'creditmemo';
+    }
+
+    function getType(): string
+    {
+        return 'push';
+    }
 }

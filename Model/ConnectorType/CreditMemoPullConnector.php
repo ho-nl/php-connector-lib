@@ -11,5 +11,15 @@ use ReachDigital\PhpConnectorLib\Model\Connector;
 
 class CreditMemoPullConnector
     extends Connector
-    implements CreditMemoPullConnectorInterface {
+    implements CreditMemoPullConnectorInterface
+{
+    function getName(): string
+    {
+        return 'creditmemo';
+    }
+
+    function getType(): string
+    {
+        return 'pull';
+    }
 }

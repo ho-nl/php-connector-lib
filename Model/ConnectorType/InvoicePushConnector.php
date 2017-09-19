@@ -11,5 +11,15 @@ use ReachDigital\PhpConnectorLib\Model\Connector;
 
 class InvoicePushConnector
     extends Connector
-    implements InvoicePushConnectorInterface {
+    implements InvoicePushConnectorInterface
+{
+    function getName(): string
+    {
+        return 'invoice';
+    }
+
+    function getType(): string
+    {
+        return 'push';
+    }
 }
