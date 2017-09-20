@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) Reach Digital (http://reachditital.nl/)
+ * Copyright (c) Reach Digital (http://reachdigital.nl/)
  * See LICENSE.txt for license details.
  */
 
