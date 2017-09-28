@@ -14,6 +14,23 @@
         "psr-4": { "ReachDigital\\PhpConnectorLib\\": "./" }
     },
     "require": {
-        "chrisboulton/php-resque": "dev-master"
+        "chrisboulton/php-resque": "dev-master",
+        "chrisboulton/php-resque-scheduler": "dev-master",
+        "jaaprood/php-resque-retry": "dev-master",
+        "jaaprood/php-resque-plugin": "dev-master"
+    },
+    "repositories": {
+        "chrisboulton/php-resque-scheduler": {
+            "type": "vcs",
+            "url": "git@github.com:chrisboulton/php-resque-scheduler.git"
+        },
+        "jaaprood/php-resque-retry": {
+            "type": "vcs",
+            "url": "git@github.com:JaapRood/php-resque-retry.git"
+        },
+        "jaaprood/php-resque-plugin": {
+            "type": "vcs",
+            "url": "git@github.com:JaapRood/php-resque-plugin.git"
+        }
     }
 }
