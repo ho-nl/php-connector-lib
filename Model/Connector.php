@@ -74,12 +74,17 @@ abstract class Connector implements ConnectorInterface
             $this->queue->dequeue(get_class($this->integration), $jobId);
         }
 
+        $packedEntity = $this->integration->packEntity($entity);
+        if ($forceEnqueue) {
+            $packedEntity['force'] = uniqid();
+        }
+
         return $this->queue->enqueue(
             get_class($this->integration),
             $this->getName(),
             $this->getType(),
             $this->integration->entityId($entity),
-            $this->integration->packEntity($entity),
+            $packedEntity,
             $hash
         );
     }
