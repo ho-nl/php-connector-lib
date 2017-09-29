@@ -30,7 +30,7 @@ class ExponentialRetryPlugin extends \Resque\Plugins\ExponentialRetry
             return false;
         }
 
-        $shouldRetry = $this->retryException($exception, $job) && !$this->skipException($exception);
+        $shouldRetry = $this->retryException($exception, $job) && $this->skipException($exception);
 
         return $shouldRetry; // retry everything for now
     }
@@ -45,11 +45,7 @@ class ExponentialRetryPlugin extends \Resque\Plugins\ExponentialRetry
     protected function skipException($exception)
     {
         foreach (self::$skipExceptions as $e) {
-            if (stripos($e, '\\') !== 0) {
-                $e = '\\'. $e;
-            }
-
-            if (is_a($exception, $e)) {
+            if ($exception instanceof $e) {
                 return false;
             }
         }
