@@ -11,6 +11,7 @@
     ],
     "minimum-stability": "stable",
     "autoload": {
+        "files" : [ "register.php" ],
         "psr-4": { "ReachDigital\\PhpConnectorLib\\": "./" }
     },
     "require": {
