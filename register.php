@@ -1,5 +1,6 @@
 <?php
 
-Resque_Event::listen('beforePerform', array(\ReachDigital\PhpConnectorLib\Resque\ExponentialRetryPlugin::class, 'beforePerform'));
-Resque_Event::listen('afterPerform', array(\ReachDigital\PhpConnectorLib\Resque\ExponentialRetryPlugin::class, 'afterPerform'));
-Resque_Event::listen('onFailure', array(\ReachDigital\PhpConnectorLib\Resque\ExponentialRetryPlugin::class, 'onFailure'));
+$retry = new \ReachDigital\PhpConnectorLib\Resque\ExponentialRetryPlugin();
+Resque_Event::listen('beforePerform', [$retry, 'beforePerform']);
+Resque_Event::listen('afterPerform', [$retry, 'afterPerform']);
+Resque_Event::listen('onFailure', [$retry, 'onFailure']);
