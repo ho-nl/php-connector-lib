@@ -6,16 +6,16 @@
 
 namespace ReachDigital\PhpConnectorLib\Model\ConnectorType;
 
-use ReachDigital\PhpConnectorLib\Api\ConnectorType\TransferOrderPushConnectorInterface;
+use ReachDigital\PhpConnectorLib\Api\ConnectorType\ContainerPushConnectorInterface;
 use ReachDigital\PhpConnectorLib\Model\Connector;
 
-class TransferOrderPushConnector
+class ContainerPushConnector
     extends Connector
-    implements TransferOrderPushConnectorInterface
+    implements ContainerPushConnectorInterface
 {
     function getName(): string
     {
-        return 'transferOrder';
+        return 'container';
     }
 
     function getType(): string

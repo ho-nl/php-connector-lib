@@ -6,7 +6,6 @@
 
 namespace ReachDigital\PhpConnectorLib\Model\ConnectorType;
 
-use ReachDigital\PhpConnectorLib\Api\ConnectorType\OrderPullConnectorInterface;
 use ReachDigital\PhpConnectorLib\Api\ConnectorType\TransferOrderPullConnectorInterface;
 use ReachDigital\PhpConnectorLib\Model\Connector;
 
