@@ -17,8 +17,7 @@
     "require": {
         "chrisboulton/php-resque": "dev-master",
         "chrisboulton/php-resque-scheduler": "dev-master",
-        "ho-nl-fork/php-resque-retry": "dev-master",
-        "jaaprood/php-resque-plugin": "dev-master"
+        "ho-nl-fork/php-resque-retry": "dev-master"
     },
     "repositories": {
         "chrisboulton/php-resque-scheduler": {
@@ -28,10 +27,6 @@
         "ho-nl-fork/php-resque-retry": {
             "type": "vcs",
             "url": "git@github.com:ho-nl-fork/php-resque-retry.git"
-        },
-        "jaaprood/php-resque-plugin": {
-            "type": "vcs",
-            "url": "git@github.com:JaapRood/php-resque-plugin.git"
         }
     }
 }
