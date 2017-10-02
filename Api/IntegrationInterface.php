@@ -85,12 +85,12 @@ interface IntegrationInterface
     function previousJobId($entity, string $name, string $type);
 
     /**
-     * Returns a fieldmapped array
+     * Builds an object from the entity
      *
      * @param mixed $entity
      * @return array
      */
-    function fieldMap($entity);
+    function buildObject($entity);
 
 
     /*============= @todo mixed responsibilities of this class? */
