@@ -14,7 +14,7 @@ class ConnectorPool implements ConnectorPoolInterface
     /**
      * @var ConnectorInterface[]
      */
-    private $connectors;
+    private $connectors = [];
 
     /**
      * @var $this
