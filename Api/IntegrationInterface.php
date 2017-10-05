@@ -11,6 +11,11 @@ interface IntegrationInterface
     /**
      * @return string
      */
+    static function getIntegrationName();
+
+    /**
+     * @return string
+     */
     function entityType();
 
     /**
