@@ -36,7 +36,7 @@ interface IntegrationInterface
      * Used to rebuild an object when running an enqueued job, with the given argument array
      *
      * @param array $data
-     * @return Object
+     * @return mixed
      */
     function unpackEntity(array $data);
 
@@ -44,10 +44,10 @@ interface IntegrationInterface
      * Build an array from the given object
      * Used to pass an object as array to the queue
      *
-     * @param Object $object
+     * @param mixed $entity
      * @return array
      */
-    function packEntity($object);
+    function packEntity($entity);
 
     /**
      * Returns a unique hash for the current entity.
@@ -85,12 +85,13 @@ interface IntegrationInterface
     function previousJobId($entity, string $name, string $type);
 
     /**
-     * Builds an object from the entity
+     * Builds an object from the entity using mappers
      *
-     * @param mixed $entity
+     * @param mixed $object Target object to map to
+     * @param mixed $entity Payload object to map from
      * @return array
      */
-    function buildObject($entity);
+    function buildObject($toObject = null, $fromObject);
 
 
     /*============= @todo mixed responsibilities of this class? */

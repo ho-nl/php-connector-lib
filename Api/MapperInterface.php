@@ -16,18 +16,18 @@ interface MapperInterface
     /**
      * Map fields to internal object.
      *
-     * @param $target mixed
-     * @param $payload mixed
+     * @param mixed $toObject
+     * @param mixed $fromObject
      * @return mixed the modified $target
      */
-    public function toInternal($target, $payload);
+    public function toInternal($toObject, $fromObject);
 
     /**
      * Map fields to external object.
      *
-     * @param $target mixed
-     * @param $payload mixed
+     * @param mixed $toObject
+     * @param mixed $fromObject
      * @return mixed the modified $target
      */
-    public function toExternal($target, $payload);
+    public function toExternal($toObject, $fromObject);
 }
