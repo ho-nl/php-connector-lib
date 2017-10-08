@@ -6,7 +6,7 @@
 
 namespace ReachDigital\PhpConnectorLib\Api;
 
-interface IntegrationInterface
+interface IntegrationInterface extends JobExecutionContextInterface
 {
     /**
      * @return string
@@ -97,30 +97,4 @@ interface IntegrationInterface
      * @return array
      */
     function buildObject($toObject = null, $fromObject);
-
-
-    /*============= @todo mixed responsibilities of this class? */
-
-
-    /**
-     * Trigger: Method called by resque before the perform method is called.
-     *
-     * Used to bootstrap the system so everything works.
-     */
-    function setUp();
-
-    /**
-     * Trigger: Method called by resque, data is available as $this->args
-     *
-     * Update an EntityType in the internal or external system
-     */
-    function perform();
-
-    /**
-     * Trigger: Method called by resque after the perform method is called.
-     *
-     * Used to clean up the system so we avoid memory leaks.
-     * @return mixed
-     */
-    function tearDown();
 }
