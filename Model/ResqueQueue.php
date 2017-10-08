@@ -6,63 +6,83 @@
 
 namespace ReachDigital\PhpConnectorLib\Model;
 
+use Magento\Framework\Exception\NoSuchEntityException;
 use ReachDigital\PhpConnectorLib\Api\QueueInterface;
 
 class ResqueQueue implements QueueInterface
 {
     const STATUS_HISTORIC = 0;
+    const QUEUE_NAME = 'connector';
+
+    private $statusLabels;
 
     /**
-     * @inheritdoc
+     * Queue a class to be executed
+     *
+     * @param string $class The name of the class that contains the code to execute the job.
+     * @param array $entity json_encode payload that will be send with the queue
+     * @param string $entityType String to identify the entity passed, usually the class of the entity.
+     * @param string $entityReference The id of the object
+     * @return string|bool
      */
-    public function enqueue($class, string $entityName, string $connectorType, string $entityId, $entity, string $hash)
+    public function enqueue(string $class, $entity, string $entityType, string $entityReference = null)
     {
-        return \Resque::enqueue('connector', $class, ['entity' => $entity, 'hash' => $hash], true);
+        return \Resque::enqueue(self::QUEUE_NAME, $class, [
+            'entity' => $entity,
+            'entityType' => $entityType,
+            'entityReference' => $entityReference
+        ], true);
     }
 
     /**
-     * @inheritdoc
+     * Dequeue a job
+     * @param string $class The name of the class that contains the code to execute the job.
+     * @param string $jobId String reference to the job to cancel it.
+     * @return mixed
      */
-    public function dequeue($class, $jobId)
+    public function dequeue(string $class, string $jobId)
     {
-        return \Resque::dequeue('connector', [$class => $jobId]);
-    }
-
-    /**
-     * @return int|string
-     */
-    public function waitingStatus()
-    {
-        return \Resque_Job_Status::STATUS_WAITING;
+        return \Resque::dequeue(self::QUEUE_NAME, [$class => $jobId]);
     }
 
     /**
      * @param string $jobId
-     * @return int|bool
+     * @return int
      */
-    public function jobStatus($jobId)
+    public function getJobStatus(string $jobId)
     {
-        $status = new \Resque_Job_Status($jobId);
-
-        return $status->get();
+        return (new \Resque_Job_Status($jobId))->get();
     }
 
     /**
-     * @return array
+     * @param int $jobStatus
+     *
+     * @return string
+     * @throws NoSuchEntityException
      */
-    public function statusMapping()
+    public function getJobStatusLabel(int $jobStatus)
     {
-        return [
-            \Resque_Job_Status::STATUS_WAITING  => 'Waiting',
-            \Resque_Job_Status::STATUS_RUNNING  => 'Running',
-            \Resque_Job_Status::STATUS_FAILED   => 'Failed',
-            \Resque_Job_Status::STATUS_COMPLETE => 'Complete',
-            self::STATUS_HISTORIC               => 'Historic',
-        ];
+        if ($this->statusLabels === null) {
+            $this->statusLabels = [
+                \Resque_Job_Status::STATUS_WAITING  => 'Waiting',
+                \Resque_Job_Status::STATUS_RUNNING  => 'Running',
+                \Resque_Job_Status::STATUS_FAILED   => 'Failed',
+                \Resque_Job_Status::STATUS_COMPLETE => 'Complete',
+                self::STATUS_HISTORIC               => 'Historic',
+            ];
+        }
+
+        if (! isset($this->statusLabels[$jobStatus])) {
+            throw new NoSuchEntityException(__('Status label for status number "%1" does not exist.', $jobStatus));
+        }
+
+        return $this->statusLabels[$jobStatus];
     }
+
 
     /**
      * @param array $statuses
+     * @deprecated Should be moved to a different class
      * @return int
      */
     public function getCombinedStatus(array $statuses)
@@ -84,6 +104,10 @@ class ResqueQueue implements QueueInterface
         return $shownStatus;
     }
 
+    /**
+     * @deprecated Should be moved to a different class
+     * @return array
+     */
     public function getStatusOrder()
     {
         return [
@@ -93,5 +117,53 @@ class ResqueQueue implements QueueInterface
             \Resque_Job_Status::STATUS_COMPLETE,
             self::STATUS_HISTORIC,
         ];
+    }
+
+    /**
+     * Get the statuses of a list of jobs.
+     *
+     * @param string[] $jobIds array of jobIds, leave empty for all jobs
+     * @return \Resque_Job_Status[]
+     */
+    public function getJobStatusList(array $jobIds = [])
+    {
+        if (empty($jobIds)) {
+            $jobIds = $this->getAllJobIds();
+        }
+
+        $jobStatuses = [];
+        foreach ($jobIds as $jobId) {
+            $jobStatuses[$jobId] = $this->getJobStatus($jobId);
+        }
+        return $jobStatuses;
+    }
+
+    /**
+     * Get a list of all the job ids currently tracking the status for. This is regardless of the status of the job.
+     * @return string[]
+     */
+    public function getAllJobIds()
+    {
+        return array_map(function ($job) {
+            return explode(':', $job)[2];
+        }, \Resque::redis()->keys('job:*:status'));
+    }
+
+
+    /**
+     * The offsets $start and $stop are zero-based indexes, with 0 being the first element of the list (the head of the
+     * list), 1 being the next element and so on.
+     *
+     * @param $start
+     * @param $stop
+     *
+     * @return \Resque_Job[]
+     */
+    public function getJobs(int $start = 0, int $stop = -1)
+    {
+        $jobs = \Resque::redis()->lrange('queue:'.self::QUEUE_NAME, $start, $stop);
+        return array_map(function($jobData) {
+            return new \Resque_Job(self::QUEUE_NAME, $jobData);
+        }, $jobs);
     }
 }

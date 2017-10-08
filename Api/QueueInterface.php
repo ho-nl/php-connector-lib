@@ -6,7 +6,6 @@
 
 namespace ReachDigital\PhpConnectorLib\Api;
 
-
 /**
  * Interface QueueInterface
  * @package ReachDigital\PhpConnectorLib\Api
@@ -14,45 +13,60 @@ namespace ReachDigital\PhpConnectorLib\Api;
 interface QueueInterface
 {
     /**
-     * Create a new job and save it to the specified queue.
+     * Queue a job
      *
      * @param string $class The name of the class that contains the code to execute the job.
-     * @param string $entityName
-     * @param string $connectorType
-     * @param string $entityId
-     * @param mixed $entity Serializable Entity as payload for the jon
-     * @param string $hash
-     * @return string
+     * @param array $entity json_encode payload that will be send with the queue
+     * @param string $entityType String to identify the entity passed, usually the class of the entity.
+     * @param string $entityReference The id of the object
+     * @return string|bool
      */
-    public function enqueue($class, string $entityName, string $connectorType, string $entityId, $entity, string $hash);
+    public function enqueue(string $class, $entity, string $entityType, string $entityReference);
 
     /**
-     * @param string $class
-     * @param string $jobId
+     * Dequeue a job
+     * @param string $class The name of the class that contains the code to execute the job.
+     * @param string $jobId String reference to the job to cancel it.
      * @return mixed
      */
-    public function dequeue($class, $jobId);
-
-    /**
-     * @return int|string
-     */
-    public function waitingStatus();
+    public function dequeue(string $class, string $jobId);
 
     /**
      * @param string $jobId
-     * @return int|string|bool
+     * @return int
      */
-    public function jobStatus($jobId);
+    public function getJobStatus(string $jobId);
 
     /**
-     * Returns an array with the internal status (IDs) as keys, and the user-friendly labels as values
-     * For example:
-     * [
-     *  1 => 'Pending',
-     *  2 => 'Complete',
-     * ]
+     * Get the label for the Job Status
      *
-     * @return array
+     * @param int $jobStatus
+     * @return int
      */
-    public function statusMapping();
+    public function getJobStatusLabel(int $jobStatus);
+
+    /**
+     * Get the statuses of a list of jobs.
+     *
+     * @param string[] $jobIds array of jobIds, leave empty for all jobs
+     * @return \Resque_Job_Status[]
+     */
+    public function getJobStatusList(array $jobIds = []);
+
+    /**
+     * Get a list of all the job ids currently tracking the status for. This is regardless of the status of the job.
+     * @return string[]
+     */
+    public function getAllJobIds();
+
+    /**
+     * The offsets $start and $stop are zero-based indexes, with 0 being the first element of the list (the head of the
+     * list), 1 being the next element and so on.
+     *
+     * @param $start
+     * @param $stop
+     *
+     * @return \Resque_Job[]
+     */
+    public function getJobs(int $start = 0, int $stop = -1);
 }
