@@ -163,7 +163,7 @@ class ResqueQueue implements QueueInterface
     {
         $jobs = \Resque::redis()->lrange('queue:'.self::QUEUE_NAME, $start, $stop);
         return array_map(function($jobData) {
-            return new \Resque_Job(self::QUEUE_NAME, $jobData);
+            return new \Resque_Job(self::QUEUE_NAME, json_decode($jobData, true));
         }, $jobs);
     }
 }
