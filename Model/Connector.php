@@ -50,7 +50,9 @@ abstract class Connector implements ConnectorInterface
         }
 
         foreach ($items as $item) {
-            $this->enqueue($item, $forceEnqueue);
+            if ($this->integration->canEnqueue($item)) {
+                $this->enqueue($item, $forceEnqueue);
+            }
         }
     }
 

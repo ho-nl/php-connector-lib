@@ -37,6 +37,13 @@ interface IntegrationInterface
     function fetch(array $references);
 
     /**
+     * Wether or not given entity can be enqueued.
+     *
+     * @return bool
+     */
+    function canEnqueue($entity);
+
+    /**
      * Build an object from the given array
      * Used to rebuild an object when running an enqueued job, with the given argument array
      *
