@@ -49,7 +49,7 @@ abstract class Connector implements ConnectorInterface
             $items = $this->integration->fetch($references);
         }
 
-        foreach ($items as $item) {
+        foreach ($items as $item) { // @fixme: invalid argument supplied to foreach
             if ($this->integration->canEnqueue($item)) {
                 $this->enqueue($item, $forceEnqueue);
             }
