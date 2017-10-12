@@ -25,7 +25,7 @@ class ResqueQueue implements QueueInterface
     public static $queues = [
         self::QUEUE_URGENT,
         self::QUEUE_NORMAL,
-        self::QUEUE_BACKGROUD
+        self::QUEUE_BACKGROUND
     ];
 
     private $statusLabels;
@@ -159,9 +159,9 @@ class ResqueQueue implements QueueInterface
      * @param int        $start
      * @param int        $stop
      *
-     * @return array
+     * @return \Resque_Job[]
      */
-    public function getJobs(array $queues = null, int $start = 0, int $stop = -1): array
+    public function getPendingJobs(array $queues = null, int $start = 0, int $stop = -1): array
     {
         if ($queues === null) { //@todo implment queues validation
             $queues = self::$queues;
@@ -230,5 +230,23 @@ class ResqueQueue implements QueueInterface
         if (!in_array($queue, self::$queues, true)) {
             throw InputException::invalidFieldValue('priority', $queue);
         }
+    }
+
+    /**
+     * The offsets $start and $stop are zero-based indexes, with 0 being the first element of the list (the head of the
+     * list), 1 being the next element and so on.
+     *
+     * @param int $start
+     * @param int $stop
+     *
+     * @return array
+     */
+    public function getFailedJobs(int $start = 0, int $stop = -1): array
+    {
+        /** @noinspection PhpUndefinedMethodInspection */
+        /** @var array $jobs */
+        return array_map(function($jobData){
+            return json_decode($jobData, true);
+        }, \Resque::redis()->lrange('failed', $start, $stop));
     }
 }

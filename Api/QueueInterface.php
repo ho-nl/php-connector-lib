@@ -14,7 +14,7 @@ interface QueueInterface
 {
     const QUEUE_URGENT = 'urgent';
     const QUEUE_NORMAL = 'normal';
-    const QUEUE_BACKGROUD = 'background';
+    const QUEUE_BACKGROUND = 'background';
 
     /**
      * Queue a job
@@ -74,7 +74,18 @@ interface QueueInterface
      * @param int         $start Start point
      * @param int         $stop  End point
      *
+     * @return \Resque_Job[]
+     */
+    public function getPendingJobs(array $queue = null, int $start = 0, int $stop = -1): array;
+
+    /**
+     * The offsets $start and $stop are zero-based indexes, with 0 being the first element of the list (the head of the
+     * list), 1 being the next element and so on.
+     *
+     * @param int $start
+     * @param int $stop
+     *
      * @return array
      */
-    public function getJobs(array $queue = null, int $start = 0, int $stop = -1): array;
+    public function getFailedJobs(int $start = 0, int $stop = -1): array;
 }
