@@ -13,12 +13,12 @@ class TransferOrderPullConnector
     extends Connector
     implements TransferOrderPullConnectorInterface
 {
-    function getName(): string
+    static function getName(): string
     {
         return 'transferOrder';
     }
 
-    function getType(): string
+    static function getType(): string
     {
         return 'pull';
     }

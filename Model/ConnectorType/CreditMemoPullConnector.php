@@ -13,12 +13,12 @@ class CreditMemoPullConnector
     extends Connector
     implements CreditMemoPullConnectorInterface
 {
-    function getName(): string
+    static function getName(): string
     {
         return 'creditmemo';
     }
 
-    function getType(): string
+    static function getType(): string
     {
         return 'pull';
     }

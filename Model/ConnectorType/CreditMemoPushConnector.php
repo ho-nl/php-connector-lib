@@ -13,12 +13,12 @@ class CreditMemoPushConnector
     extends Connector
     implements CreditMemoPushConnectorInterface
 {
-    function getName(): string
+    static function getName(): string
     {
         return 'creditmemo';
     }
 
-    function getType(): string
+    static function getType(): string
     {
         return 'push';
     }

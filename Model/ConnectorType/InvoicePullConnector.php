@@ -13,12 +13,12 @@ class InvoicePullConnector
     extends Connector
     implements InvoicePullConnectorInterface
 {
-    function getName(): string
+    static function getName(): string
     {
         return 'invoice';
     }
 
-    function getType(): string
+    static function getType(): string
     {
         return 'pull';
     }

@@ -17,12 +17,12 @@ interface ConnectorInterface
     /**
      * @return string
      */
-    function getName(): string;
+    static function getName(): string;
 
     /**
      * @return string
      */
-    function getType(): string;
+    static function getType(): string;
 
     /**
      * @param string[]|null $references List of references to be updated. When no argument is provided it is expected

@@ -13,12 +13,12 @@ class ContainerPullConnector
     extends Connector
     implements ContainerPullConnectorInterface
 {
-    function getName(): string
+    static function getName(): string
     {
         return 'container';
     }
 
-    function getType(): string
+    static function getType(): string
     {
         return 'pull';
     }

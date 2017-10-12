@@ -13,12 +13,12 @@ class ProductPullConnector
     extends Connector
     implements ProductPullConnectorInterface
 {
-    function getName(): string
+    static function getName(): string
     {
         return 'product';
     }
 
-    function getType(): string
+    static function getType(): string
     {
         return 'pull';
     }

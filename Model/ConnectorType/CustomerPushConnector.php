@@ -13,12 +13,12 @@ class CustomerPushConnector
     extends Connector
     implements CustomerPushConnectorInterface
 {
-    function getName(): string
+    static function getName(): string
     {
         return 'customer';
     }
 
-    function getType(): string
+    static function getType(): string
     {
         return 'push';
     }

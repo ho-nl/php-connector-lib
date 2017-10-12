@@ -13,12 +13,12 @@ class OrderPullConnector
     extends Connector
     implements OrderPullConnectorInterface
 {
-    function getName(): string
+    static function getName(): string
     {
         return 'order';
     }
 
-    function getType(): string
+    static function getType(): string
     {
         return 'pull';
     }

@@ -13,12 +13,12 @@ class InvoicePushConnector
     extends Connector
     implements InvoicePushConnectorInterface
 {
-    function getName(): string
+    static function getName(): string
     {
         return 'invoice';
     }
 
-    function getType(): string
+    static function getType(): string
     {
         return 'push';
     }

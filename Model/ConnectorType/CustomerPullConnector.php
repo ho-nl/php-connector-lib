@@ -13,12 +13,12 @@ class CustomerPullConnector
     extends Connector
     implements CustomerPullConnectorInterface
 {
-    function getName(): string
+    static function getName(): string
     {
         return 'customer';
     }
 
-    function getType(): string
+    static function getType(): string
     {
         return 'pull';
     }
