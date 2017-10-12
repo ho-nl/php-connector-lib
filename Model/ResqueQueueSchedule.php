@@ -1,22 +1,20 @@
 <?php
 /**
- * Copyright (c) Reach Digital (http://reachdigital.nl/)
+ * Copyright © Reach Digital (https://www.reachdigital.io/)
  * See LICENSE.txt for license details.
+ */
+
+/**
+ * Created by PhpStorm.
+ * User: paulhachmang
+ * Date: 12-10-17
+ * Time: 22:13
  */
 
 namespace ReachDigital\PhpConnectorLib\Model;
 
 use ReachDigital\PhpConnectorLib\Api\QueueScheduleInterface;
 
-/**
- * Class ResqueQueueSchedule
- *
- * @todo Extend \ResqueScheduler: it doesn't give us back a scheduleId
- * @todo Extend \ResqueScheduler: it doesn't allow us to actually dequeue schedule items based on a scheduleId
- * @todo Extend \ResqueScheduler: it doesn't track the status of the jobs that it schedules.
- *
- * @package ReachDigital\PhpConnectorLib\Model
- */
 class ResqueQueueSchedule implements QueueScheduleInterface
 {
 
@@ -60,5 +58,59 @@ class ResqueQueueSchedule implements QueueScheduleInterface
             'entityType' => $entityType,
             'entityReference' => $entityReference
         ], true);
+    }
+    /**
+     * Dequeue a scheduled job
+     *
+     * @param string $class
+     * @param string $scheduleId
+     *
+     * @return mixed
+     */
+    public function dequeue(string $class, string $scheduleId)
+    {
+        // TODO: Implement dequeue() method.
+    }
+
+    /**
+     * Get a list of all scheduled jobs and the time they are scheduled
+     *
+     * @param int $start
+     * @param int $stop
+     *
+     * @return array
+     */
+    public function getScheduledJobs(int $start = 0, int $stop = -1): array
+    {
+        /** @var array $timestamps */
+        $timestamps = \Resque::redis()->zrange('delayed_queue_schedule', 0, -1);
+
+        $timestampSizes = [];
+        foreach ($timestamps as $timestamp) {
+            $size = \Resque::redis()->llen('delayed:' . $timestamp);
+            $timestampSizes[$timestamp] = $size;
+        }
+
+        $timestampLrangeSizes = ResqueQueue::getLrangeSizes($timestampSizes, $start, $stop);
+        $resqueJobs = [];
+        foreach ($timestampLrangeSizes as $timestamp => $sizes) {
+            if ($sizes === false) {
+                continue;
+            }
+
+            list ($start, $stop) = $sizes;
+
+            /** @noinspection PhpUndefinedMethodInspection */
+            /** @var array $jobs */
+            $jobs = \Resque::redis()->lrange('delayed:'.$timestamp, $start, $stop);
+
+            foreach ($jobs as $jobData) {
+                $job = json_decode($jobData, true);
+                $job['scheduled_at'] = $timestamp;
+                $resqueJobs[] = $job;
+            }
+        }
+
+        return $resqueJobs;
     }
 }

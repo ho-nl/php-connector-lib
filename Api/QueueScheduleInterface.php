@@ -49,4 +49,14 @@ interface QueueScheduleInterface
      * @return mixed
      */
     public function dequeue(string $class, string $scheduleId);
+
+    /**
+     * Get a list of all scheduled jobs and the time they are scheduled
+     *
+     * @param int $start
+     * @param int $stop
+     *
+     * @return array
+     */
+    public function getScheduledJobs(int $start = 0, int $stop = -1): array;
 }

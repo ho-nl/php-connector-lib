@@ -12,14 +12,14 @@ use ReachDigital\PhpConnectorLib\Api\QueueInterface;
 
 class ResqueQueue implements QueueInterface
 {
-    const STATUS_HISTORIC = 0;
 
     public static $statusOrder = [
-        \Resque_Job_Status::STATUS_FAILED,
-        \Resque_Job_Status::STATUS_RUNNING,
-        \Resque_Job_Status::STATUS_WAITING,
-        \Resque_Job_Status::STATUS_COMPLETE,
-        self::STATUS_HISTORIC,
+        self::STATUS_FAILED,
+        self::STATUS_RUNNING,
+        self::STATUS_WAITING,
+        self::STATUS_SCHEDULED,
+        self::STATUS_COMPLETE,
+        self::STATUS_UNKNOWN,
     ];
 
     public static $queues = [
@@ -81,11 +81,12 @@ class ResqueQueue implements QueueInterface
     {
         if ($this->statusLabels === null) {
             $this->statusLabels = [
-                \Resque_Job_Status::STATUS_WAITING  => 'Waiting',
-                \Resque_Job_Status::STATUS_RUNNING  => 'Running',
-                \Resque_Job_Status::STATUS_FAILED   => 'Failed',
-                \Resque_Job_Status::STATUS_COMPLETE => 'Complete',
-                self::STATUS_HISTORIC               => 'Historic',
+                self::STATUS_UNKNOWN  => 'Unknown',
+                self::STATUS_WAITING  => 'Waiting',
+                self::STATUS_RUNNING  => 'Running',
+                self::STATUS_FAILED   => 'Failed',
+                self::STATUS_COMPLETE => 'Complete',
+                self::STATUS_SCHEDULED => 'Scheduled',
             ];
         }
 
@@ -104,7 +105,7 @@ class ResqueQueue implements QueueInterface
      */
     public function getCombinedStatus(array $statuses)
     {
-        $shownStatus = self::STATUS_HISTORIC;
+        $shownStatus = self::STATUS_UNKNOWN;
 
         foreach ($statuses as $status) {
             if (!$shownStatus) {
@@ -172,7 +173,7 @@ class ResqueQueue implements QueueInterface
             $size = \Resque::size($queue);
             $queueSizes[$queue] = $size;
         }
-        $queueLrangeSizes = $this->getLrangeSizes($queueSizes, $start, $stop);
+        $queueLrangeSizes = self::getLrangeSizes($queueSizes, $start, $stop);
 
         $resqueJobs = [];
         foreach ($queueLrangeSizes as $queue => $sizes) {
@@ -201,7 +202,7 @@ class ResqueQueue implements QueueInterface
      *
      * @return array
      */
-    private function getLrangeSizes(array $queueSizes, int $start = 0, int $stop = -1): array
+    public static function getLrangeSizes(array $queueSizes, int $start = 0, int $stop = -1): array
     {
         if ($stop <= -1) {
             $stop = PHP_INT_MAX;

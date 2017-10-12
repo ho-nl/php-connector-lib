@@ -16,6 +16,14 @@ interface QueueInterface
     const QUEUE_NORMAL = 'normal';
     const QUEUE_BACKGROUND = 'background';
 
+
+    const STATUS_UNKNOWN = 0;
+    const STATUS_WAITING = \Resque_Job_Status::STATUS_WAITING;
+    const STATUS_RUNNING = \Resque_Job_Status::STATUS_RUNNING;
+    const STATUS_FAILED = \Resque_Job_Status::STATUS_FAILED;
+    const STATUS_COMPLETE = \Resque_Job_Status::STATUS_COMPLETE;
+    const STATUS_SCHEDULED = 5;
+
     /**
      * Queue a job
      *
