@@ -13,12 +13,12 @@ class TransferOrderPushConnector
     extends Connector
     implements TransferOrderPushConnectorInterface
 {
-    function getName(): string
+    public function getName(): string
     {
         return 'transferOrder';
     }
 
-    function getType(): string
+    public function getType(): string
     {
         return 'push';
     }

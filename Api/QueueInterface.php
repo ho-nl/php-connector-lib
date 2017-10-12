@@ -12,28 +12,35 @@ namespace ReachDigital\PhpConnectorLib\Api;
  */
 interface QueueInterface
 {
+    const QUEUE_URGENT = 'urgent';
+    const QUEUE_NORMAL = 'normal';
+    const QUEUE_BACKGROUD = 'background';
+
     /**
      * Queue a job
      *
-     * @param string $class The name of the class that contains the code to execute the job.
-     * @param array $entity json_encode payload that will be send with the queue
-     * @param string $entityType String to identify the entity passed, usually the class of the entity.
-     * @param string $entityReference The id of the object
-     * @return string|bool
+     * @param string $queue   QUEUE_URGENT|QUEUE_NORMAL|QUEUE_BACKGROUD
+     * @param string $class   The name of the class that contains the code to execute the job.
+     * @param array  $payload json_encode payload that will be send with the queue
+     *
+     * @return bool|string
      */
-    public function enqueue(string $class, $entity, string $entityType, string $entityReference);
+    public function enqueue(string $queue, string $class, array $payload);
 
     /**
      * Dequeue a job
+     *
+     * @param string $queue QUEUE_URGENT|QUEUE_NORMAL|QUEUE_BACKGROUD
      * @param string $class The name of the class that contains the code to execute the job.
      * @param string $jobId String reference to the job to cancel it.
+     *
      * @return mixed
      */
-    public function dequeue(string $class, string $jobId);
+    public function dequeue(string $queue, string $class, string $jobId);
 
     /**
      * @param string $jobId
-     * @return int
+     * @return int|null
      */
     public function getJobStatus(string $jobId);
 
@@ -41,7 +48,7 @@ interface QueueInterface
      * Get the label for the Job Status
      *
      * @param int $jobStatus
-     * @return int
+     * @return int|null
      */
     public function getJobStatusLabel(int $jobStatus);
 
@@ -51,22 +58,23 @@ interface QueueInterface
      * @param string[] $jobIds array of jobIds, leave empty for all jobs
      * @return \Resque_Job_Status[]
      */
-    public function getJobStatusList(array $jobIds = []);
+    public function getJobStatusList(array $jobIds = []): array;
 
     /**
      * Get a list of all the job ids currently tracking the status for. This is regardless of the status of the job.
      * @return string[]
      */
-    public function getAllJobIds();
+    public function getAllJobIds(): array;
 
     /**
      * The offsets $start and $stop are zero-based indexes, with 0 being the first element of the list (the head of the
      * list), 1 being the next element and so on.
      *
-     * @param $start
-     * @param $stop
+     * @param array|null $queue Name of the queue
+     * @param int         $start Start point
+     * @param int         $stop  End point
      *
-     * @return \Resque_Job[]
+     * @return array
      */
-    public function getJobs(int $start = 0, int $stop = -1);
+    public function getJobs(array $queue = null, int $start = 0, int $stop = -1): array;
 }

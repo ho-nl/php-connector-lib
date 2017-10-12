@@ -14,7 +14,7 @@ interface JobExecutionContextInterface
      *
      * Used to bootstrap the system so everything works.
      */
-    function setUp();
+    public function setUp();
 
     /**
      * Execution method
@@ -22,7 +22,7 @@ interface JobExecutionContextInterface
      *
      * Update an EntityType in the internal or external system
      */
-    function perform();
+    public function perform();
 
     /**
      * Job Destructor
@@ -31,5 +31,5 @@ interface JobExecutionContextInterface
      * Used to clean up the system so we avoid memory leaks.
      * @return mixed
      */
-    function tearDown();
+    public function tearDown();
 }

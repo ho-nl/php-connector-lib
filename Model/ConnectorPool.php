@@ -24,7 +24,7 @@ class ConnectorPool implements ConnectorPoolInterface
     /**
      * @inheritdoc
      */
-    function register(ConnectorInterface $connector)
+    public function register(ConnectorInterface $connector)
     {
         $this->connectors[] = $connector;
     }
@@ -32,7 +32,7 @@ class ConnectorPool implements ConnectorPoolInterface
     /**
      * @inheritdoc
      */
-    function getConnectors(string $type = null): array
+    public function getConnectors(string $type = null): array
     {
         if (! $type) {
             return $this->connectors;
@@ -46,7 +46,7 @@ class ConnectorPool implements ConnectorPoolInterface
     /**
      * @inheritdoc
      */
-    static function getInstance()
+    public static function getInstance()
     {
         if (self::$instance === null) {
             self::$instance = new self;

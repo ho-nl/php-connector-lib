@@ -16,5 +16,5 @@ interface IntegrationChangedInterface extends IntegrationInterface
      *
      * @return \Generator|bool List of external references
      */
-    function fetchChanged();
+    public function fetchChanged();
 }

@@ -13,12 +13,12 @@ class ContainerPushConnector
     extends Connector
     implements ContainerPushConnectorInterface
 {
-    function getName(): string
+    public function getName(): string
     {
         return 'container';
     }
 
-    function getType(): string
+    public function getType(): string
     {
         return 'push';
     }

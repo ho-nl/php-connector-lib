@@ -17,12 +17,12 @@ interface ConnectorInterface
     /**
      * @return string
      */
-    function getName(): string;
+    public function getName(): string;
 
     /**
      * @return string
      */
-    function getType(): string;
+    public function getType(): string;
 
     /**
      * @param string[]|null $references List of references to be updated. When no argument is provided it is expected
@@ -32,7 +32,7 @@ interface ConnectorInterface
      * @param bool $forceAll
      * @return string Job ID
      */
-    function run(array $references = null, bool $forceEnqueue = false, bool $forceAll = false);
+    public function run(array $references = null, bool $forceEnqueue = false, bool $forceAll = false);
 
 
     /**
@@ -41,5 +41,5 @@ interface ConnectorInterface
      * @param bool $forceEnqueue
      * @return string Job ID
      */
-    function enqueue($entity, bool $forceEnqueue = false);
+    public function enqueue($entity, bool $forceEnqueue = false);
 }

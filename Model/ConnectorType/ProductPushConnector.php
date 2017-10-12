@@ -13,12 +13,12 @@ class ProductPushConnector
     extends Connector
     implements ProductPushConnectorInterface
 {
-    function getName(): string
+    public function getName(): string
     {
         return 'product';
     }
 
-    function getType(): string
+    public function getType(): string
     {
         return 'push';
     }

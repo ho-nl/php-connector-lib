@@ -35,7 +35,7 @@ abstract class Connector implements ConnectorInterface
     /**
      * @inheritdoc
      */
-    function run(array $references = null, bool $forceEnqueue = false, bool $forceAll = false)
+    public function run(array $references = null, bool $forceEnqueue = false, bool $forceAll = false)
     {
         if (! $references) {
             if ($this->integration instanceof IntegrationChangedInterface && !$forceAll) {
@@ -57,7 +57,7 @@ abstract class Connector implements ConnectorInterface
     /**
      * @inheritdoc
      */
-    function enqueue($entity, bool $forceEnqueue = false)
+    public function enqueue($entity, bool $forceEnqueue = false)
     {
         $hash = $this->integration->entityHash($entity);
         $previousHash = $this->integration->previousEntityHash($entity, $this->getName(), $this->getType());

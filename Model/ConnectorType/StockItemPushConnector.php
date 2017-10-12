@@ -13,12 +13,12 @@ class StockItemPushConnector
     extends Connector
     implements StockItemPushConnectorInterface
 {
-    function getName(): string
+    public function getName(): string
     {
         return 'stockItem';
     }
 
-    function getType(): string
+    public function getType(): string
     {
         return 'push';
     }

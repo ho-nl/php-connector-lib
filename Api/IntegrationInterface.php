@@ -11,19 +11,19 @@ interface IntegrationInterface extends JobExecutionContextInterface
     /**
      * @return string
      */
-    static function getIntegrationName();
+    public static function getIntegrationName();
 
     /**
      * @return string
      */
-    function entityType();
+    public function entityType();
 
     /**
      * Get a list of all references.
      *
      * @return \Generator|bool List of references
      */
-    function fetchAll();
+    public function fetchAll();
 
     /**
      * Fetch data for given references
@@ -34,7 +34,7 @@ interface IntegrationInterface extends JobExecutionContextInterface
      * @param array $references
      * @return \Generator List of objects
      */
-    function fetch(array $references);
+    public function fetch(array $references);
 
     /**
      * Build an object from the given array
@@ -43,7 +43,7 @@ interface IntegrationInterface extends JobExecutionContextInterface
      * @param array $data
      * @return mixed
      */
-    function unpackEntity(array $data);
+    public function unpackEntity(array $data);
 
     /**
      * Build an array from the given object
@@ -52,7 +52,7 @@ interface IntegrationInterface extends JobExecutionContextInterface
      * @param mixed $entity
      * @return array
      */
-    function packEntity($entity);
+    public function packEntity($entity);
 
     /**
      * Returns a unique hash for the current entity.
@@ -60,7 +60,7 @@ interface IntegrationInterface extends JobExecutionContextInterface
      * @param $entity
      * @return mixed
      */
-    function entityHash($entity);
+    public function entityHash($entity);
 
     /**
      * Returns an identifier unique for the entity
@@ -68,7 +68,7 @@ interface IntegrationInterface extends JobExecutionContextInterface
      * @param $entity
      * @return string|int
      */
-    function entityId($entity);
+    public function entityId($entity);
 
     /**
      * Returns the previously successfully synced entity hash.
@@ -77,7 +77,7 @@ interface IntegrationInterface extends JobExecutionContextInterface
      * @param string $type
      * @return string
      */
-    function previousEntityHash($entity, string $name, string $type);
+    public function previousEntityHash($entity, string $name, string $type);
 
     /**
      * Returns the previously enqueued job ID
@@ -87,7 +87,7 @@ interface IntegrationInterface extends JobExecutionContextInterface
      * @param string $type
      * @return string
      */
-    function previousJobId($entity, string $name, string $type);
+    public function previousJobId($entity, string $name, string $type);
 
     /**
      * Builds an object from the entity using mappers
@@ -96,5 +96,5 @@ interface IntegrationInterface extends JobExecutionContextInterface
      * @param mixed $entity Payload object to map from
      * @return array
      */
-    function buildObject($toObject = null, $fromObject);
+    public function buildObject($toObject = null, $fromObject);
 }

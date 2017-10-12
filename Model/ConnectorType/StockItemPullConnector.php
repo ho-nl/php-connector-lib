@@ -13,12 +13,12 @@ class StockItemPullConnector
     extends Connector
     implements StockItemPullConnectorInterface
 {
-    function getName(): string
+    public function getName(): string
     {
         return 'stockItem';
     }
 
-    function getType(): string
+    public function getType(): string
     {
         return 'pull';
     }

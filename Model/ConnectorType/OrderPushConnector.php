@@ -13,12 +13,12 @@ class OrderPushConnector
     extends Connector
     implements OrderPushConnectorInterface
 {
-    function getName(): string
+    public function getName(): string
     {
         return 'order';
     }
 
-    function getType(): string
+    public function getType(): string
     {
         return 'push';
     }

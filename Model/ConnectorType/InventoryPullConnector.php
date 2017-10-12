@@ -13,12 +13,12 @@ class InventoryPullConnector
     extends Connector
     implements InventoryPullConnectorInterface
 {
-    function getName(): string
+    public function getName(): string
     {
         return 'inventory';
     }
 
-    function getType(): string
+    public function getType(): string
     {
         return 'pull';
     }

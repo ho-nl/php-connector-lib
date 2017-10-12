@@ -8,12 +8,13 @@ namespace ReachDigital\PhpConnectorLib\Resque;
 
 class ExponentialRetryPlugin extends \Resque\Plugins\ExponentialRetry
 {
-    static $skipExceptions = [];
+    private static $skipExceptions = [];
 
     /**
      * @param string $class
      */
-    static function addSkipException(string $class) {
+    public static function addSkipException(string $class)
+    {
         self::$skipExceptions[] = $class;
     }
 

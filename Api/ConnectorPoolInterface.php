@@ -20,16 +20,16 @@ interface ConnectorPoolInterface
      * @param ConnectorInterface $class
      * @return void
      */
-    function register(ConnectorInterface $class);
+    public function register(ConnectorInterface $class);
 
     /**
      * @param string|null $type
      * @return ConnectorInterface[]
      */
-    function getConnectors(string $type = null): array;
+    public function getConnectors(string $type = null): array;
 
     /**
      * @return ConnectorPoolInterface
      */
-    static function getInstance();
+    public static function getInstance();
 }

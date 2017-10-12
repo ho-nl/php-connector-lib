@@ -13,12 +13,12 @@ class ShipmentPullConnector
     extends Connector
     implements ShipmentPullConnectorInterface
 {
-    function getName(): string
+    public function getName(): string
     {
         return 'shipment';
     }
 
-    function getType(): string
+    public function getType(): string
     {
         return 'pull';
     }
