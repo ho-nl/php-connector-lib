@@ -44,8 +44,10 @@ composer require reach-digital/php-connector-lib
 ## Starting the queue
 
 ```
-QUEUE=* VERBOSE=1 APP_INCLUDE=vendor/autoload.php php vendor/chrisboulton/php-resque/resque.php
+QUEUE=* VERBOSE=0 REDIS_BACKEND=127.0.0.1:6379 REDIS_BACKEND_DB=5 APP_INCLUDE=app/Mage.php php vendor/bin/resque
 ```
+
+Modify REDIS_BACKEND_* as needed
 
 ## Logging
 
