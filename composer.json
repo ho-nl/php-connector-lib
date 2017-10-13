@@ -18,15 +18,5 @@
         "chrisboulton/php-resque": "dev-master",
         "chrisboulton/php-resque-scheduler": "dev-master",
         "ho-nl-fork/php-resque-retry": "dev-master"
-    },
-    "repositories": {
-        "chrisboulton/php-resque-scheduler": {
-            "type": "vcs",
-            "url": "git@github.com:chrisboulton/php-resque-scheduler.git"
-        },
-        "ho-nl-fork/php-resque-retry": {
-            "type": "vcs",
-            "url": "git@github.com:ho-nl-fork/php-resque-retry.git"
-        }
     }
 }
