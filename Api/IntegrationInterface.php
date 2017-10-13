@@ -97,10 +97,10 @@ interface IntegrationInterface
     function previousJobId($entity, string $name, string $type);
 
     /**
-     * Builds an object from the entity using mappers
+     * Builds an object from the entity using objectProcessors
      *
-     * @param mixed $object Target object to map to
-     * @param mixed $entity Payload object to map from
+     * @param mixed $toObject Target object to map to
+     * @param mixed $fromObject Payload object to map from
      * @return array
      */
     function buildObject($toObject = null, $fromObject);
