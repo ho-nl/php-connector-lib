@@ -16,7 +16,7 @@ interface IntegrationInterface
     /**
      * @return string
      */
-    function entityType();
+    static function entityType();
 
     /**
      * Get a list of all references.
