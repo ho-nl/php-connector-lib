@@ -6,8 +6,6 @@
 
 namespace ReachDigital\PhpConnectorLib\Model;
 
-use Magento\Framework\Exception\InputException;
-use Magento\Framework\Exception\NoSuchEntityException;
 use ReachDigital\PhpConnectorLib\Api\QueueInterface;
 
 class ResqueQueue implements QueueInterface
@@ -33,40 +31,40 @@ class ResqueQueue implements QueueInterface
     /**
      * Queue a job
      *
-     * @param string $queue   QUEUE_URGENT|QUEUE_NORMAL|QUEUE_BACKGROUND
-     * @param string $class   The name of the class that contains the code to execute the job.
-     * @param array  $payload json_encode payload that will be send with the queue
+     * @param string $queue        QUEUE_URGENT|QUEUE_NORMAL|QUEUE_BACKGROUND
+     * @param string $jobClassName The name of the class that contains the code to execute the job.
+     * @param array  $payload      json_encode payload that will be send with the queue
      *
      * @return bool|string
-     * @throws InputException
+     * @throws \RuntimeException
      */
-    public function enqueue(string $queue, string $class, array $payload)
+    public function enqueue(string $queue, string $jobClassName, array $payload)
     {
-        $this->validateQueues($queue);
-        return \Resque::enqueue($queue, $class, $payload, true);
+        $this->validateQueue($queue);
+        return \Resque::enqueue($queue, $jobClassName, $payload, true);
     }
 
     /**
      * Dequeue a job
      *
-     * @param string $queue QUEUE_URGENT|QUEUE_NORMAL|QUEUE_BACKGROUND
-     * @param string $class The name of the class that contains the code to execute the job.
-     * @param string $jobId String reference to the job to cancel it.
+     * @param string $queue        QUEUE_URGENT|QUEUE_NORMAL|QUEUE_BACKGROUND
+     * @param string $jobClassName The name of the class that contains the code to execute the job.
+     * @param string $jobId        String reference to the job to cancel it.
      *
      * @return mixed
-     * @throws InputException
+     * @throws \RuntimeException
      */
-    public function dequeue(string $queue, string $class, string $jobId)
+    public function dequeue(string $queue, string $jobClassName, string $jobId): int
     {
-        $this->validateQueues($queue);
-        return \Resque::dequeue($queue, [$class => $jobId]);
+        $this->validateQueue($queue);
+        return \Resque::dequeue($queue, [$jobClassName => $jobId]);
     }
 
     /**
      * @param string $jobId
      * @return int|null
      */
-    public function getJobStatus(string $jobId)
+    public function getJobStatus(string $jobId): int
     {
         return (new \Resque_Job_Status($jobId))->get();
     }
@@ -75,9 +73,9 @@ class ResqueQueue implements QueueInterface
      * @param int $jobStatus
      *
      * @return string|null
-     * @throws NoSuchEntityException
+     * @throws \Exception
      */
-    public function getJobStatusLabel(int $jobStatus)
+    public function getJobStatusLabel(int $jobStatus): string
     {
         if ($this->statusLabels === null) {
             $this->statusLabels = [
@@ -91,7 +89,7 @@ class ResqueQueue implements QueueInterface
         }
 
         if (! isset($this->statusLabels[$jobStatus])) {
-            throw new NoSuchEntityException(__('Status label for status number "%1" does not exist.', $jobStatus));
+            throw new \RuntimeException(sprintf('Status label for status number "%s" does not exist.', $jobStatus));
         }
 
         return $this->statusLabels[$jobStatus];
@@ -147,6 +145,7 @@ class ResqueQueue implements QueueInterface
      */
     public function getAllJobIds(): array
     {
+        /** @noinspection PhpUndefinedMethodInspection */
         return array_map(function ($job) {
             return explode(':', $job)[2];
         }, \Resque::redis()->keys('job:*:status'));
@@ -161,15 +160,17 @@ class ResqueQueue implements QueueInterface
      * @param int        $stop
      *
      * @return \Resque_Job[]
+     * @throws \RuntimeException
      */
     public function getPendingJobs(array $queues = null, int $start = 0, int $stop = -1): array
     {
-        if ($queues === null) { //@todo implment queues validation
+        if ($queues === null) {
             $queues = self::$queues;
         }
 
         $queueSizes = [];
         foreach ($queues as $queue) {
+            $this->validateQueue($queue);
             $size = \Resque::size($queue);
             $queueSizes[$queue] = $size;
         }
@@ -180,7 +181,7 @@ class ResqueQueue implements QueueInterface
             if ($sizes === false) {
                 continue;
             }
-
+            /** @noinspection MultiAssignmentUsageInspection */
             list ($start, $stop) = $sizes;
 
             /** @noinspection PhpUndefinedMethodInspection */
@@ -200,6 +201,7 @@ class ResqueQueue implements QueueInterface
      * @param int        $start
      * @param int        $stop
      *
+     * @deprecated Move to seperate ResqueUtilities class
      * @return array
      */
     public static function getLrangeSizes(array $queueSizes, int $start = 0, int $stop = -1): array
@@ -221,15 +223,16 @@ class ResqueQueue implements QueueInterface
         }, $queueSizes);
     }
 
-
     /**
      * @param string $queue
-     * @throws InputException
+     *
+     * @throws \RuntimeException
      */
-    private function validateQueues(string $queue)
+    private function validateQueue(string $queue)
     {
         if (!in_array($queue, self::$queues, true)) {
-            throw InputException::invalidFieldValue('priority', $queue);
+            $msg = 'Queue %s not found, must be one of %s';
+            throw new \RuntimeException(sprintf($msg, $queue, implode(', ', self::$queues)));
         }
     }
 

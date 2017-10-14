@@ -27,38 +27,38 @@ interface QueueInterface
     /**
      * Queue a job
      *
-     * @param string $queue   QUEUE_URGENT|QUEUE_NORMAL|QUEUE_BACKGROUD
-     * @param string $class   The name of the class that contains the code to execute the job.
-     * @param array  $payload json_encode payload that will be send with the queue
+     * @param string $queue        QUEUE_URGENT|QUEUE_NORMAL|QUEUE_BACKGROUD
+     * @param string $jobClassName The name of the class that contains the code to execute the job.
+     * @param array  $payload      json_encode payload that will be send with the queue
      *
      * @return bool|string
      */
-    public function enqueue(string $queue, string $class, array $payload);
+    public function enqueue(string $queue, string $jobClassName, array $payload);
 
     /**
      * Dequeue a job
      *
-     * @param string $queue QUEUE_URGENT|QUEUE_NORMAL|QUEUE_BACKGROUD
-     * @param string $class The name of the class that contains the code to execute the job.
-     * @param string $jobId String reference to the job to cancel it.
+     * @param string $queue        QUEUE_URGENT|QUEUE_NORMAL|QUEUE_BACKGROUD
+     * @param string $jobClassName The name of the class that contains the code to execute the job.
+     * @param string $jobId        String reference to the job to cancel it.
      *
-     * @return mixed
+     * @return int
      */
-    public function dequeue(string $queue, string $class, string $jobId);
+    public function dequeue(string $queue, string $jobClassName, string $jobId): int;
 
     /**
      * @param string $jobId
-     * @return int|null
+     * @return int
      */
-    public function getJobStatus(string $jobId);
+    public function getJobStatus(string $jobId): int;
 
     /**
      * Get the label for the Job Status
      *
      * @param int $jobStatus
-     * @return int|null
+     * @return string
      */
-    public function getJobStatusLabel(int $jobStatus);
+    public function getJobStatusLabel(int $jobStatus): string;
 
     /**
      * Get the statuses of a list of jobs.
