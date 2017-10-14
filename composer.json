@@ -11,12 +11,11 @@
     ],
     "minimum-stability": "stable",
     "autoload": {
-        "files" : [ "register.php" ],
-        "psr-4": { "ReachDigital\\PhpConnectorLib\\": "./" }
+        "files" : [ "registration.php" ],
+        "psr-4": { "ReachDigital\\PhpConnectorLib\\": "" }
     },
     "require": {
         "chrisboulton/php-resque": "dev-master",
-        "chrisboulton/php-resque-scheduler": "dev-master",
-        "ho-nl-fork/php-resque-retry": "dev-master"
+        "chrisboulton/php-resque-scheduler": "dev-master"
     }
 }
