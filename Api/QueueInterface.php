@@ -29,11 +29,11 @@ interface QueueInterface
      *
      * @param string $queue        QUEUE_URGENT|QUEUE_NORMAL|QUEUE_BACKGROUD
      * @param string $jobClassName The name of the class that contains the code to execute the job.
-     * @param array  $payload      json_encode payload that will be send with the queue
+     * @param array  $args         json_encode payload that will be send with the queue
      *
      * @return bool|string
      */
-    public function enqueue(string $queue, string $jobClassName, array $payload);
+    public function enqueue(string $queue, string $jobClassName, array $args);
 
     /**
      * Dequeue a job
