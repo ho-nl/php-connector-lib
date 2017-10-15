@@ -7,8 +7,8 @@
 namespace ReachDigital\PhpConnectorLib\Model\ConnectorType;
 
 use ReachDigital\PhpConnectorLib\Api\ConnectorType\InventoryPullConnectorInterface;
-use ReachDigital\PhpConnectorLib\Model\Connector;
+use ReachDigital\PhpConnectorLib\Model\AbstractConnector;
 
-class InventoryPullConnector extends Connector implements InventoryPullConnectorInterface
+class InventoryPullAbstractConnector extends AbstractConnector implements InventoryPullConnectorInterface
 {
 }

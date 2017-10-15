@@ -30,7 +30,7 @@ class Runner {
      * @param bool $forceAll
      * @return array
      */
-    function run($type = null, array $references = null, bool $forceQueue = false, bool $forceAll = false)
+    public function run($type = null, array $references = null, bool $forceQueue = false, bool $forceAll = false)
     {
         $result = [];
         foreach ($this->connectorPool->getConnectors($type) as $connector) {
@@ -39,7 +39,7 @@ class Runner {
         return $result;
     }
 
-    function enqueue($type = null, $entity)
+    public function enqueue($type = null, $entity)
     {
         $result = [];
         foreach ($this->connectorPool->getConnectors($type) as $connector) {

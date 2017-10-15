@@ -6,7 +6,7 @@
 
 namespace ReachDigital\PhpConnectorLib\Api;
 
-interface IntegrationInterface extends JobExecutionContextInterface
+interface IntegrationInterface extends JobInterface
 {
     /**
      * @return string
@@ -16,7 +16,7 @@ interface IntegrationInterface extends JobExecutionContextInterface
     /**
      * @return string
      */
-    public function entityType();
+    public static function entityType();
 
     /**
      * Get a list of all references.
@@ -75,7 +75,7 @@ interface IntegrationInterface extends JobExecutionContextInterface
      * @param mixed $entity
      * @param string $name
      * @param string $type
-     * @return string
+     * @return string|null
      */
     public function previousEntityHash($entity, string $name, string $type);
 
@@ -90,10 +90,10 @@ interface IntegrationInterface extends JobExecutionContextInterface
     public function previousJobId($entity, string $name, string $type);
 
     /**
-     * Builds an object from the entity using mappers
+     * Builds an object from the entity using objectProcessors
      *
-     * @param mixed $object Target object to map to
-     * @param mixed $entity Payload object to map from
+     * @param mixed $toObject Target object to map to
+     * @param mixed $fromObject Payload object to map from
      * @return array
      */
     public function buildObject($toObject = null, $fromObject);

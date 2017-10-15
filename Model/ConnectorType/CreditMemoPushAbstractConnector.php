@@ -7,8 +7,8 @@
 namespace ReachDigital\PhpConnectorLib\Model\ConnectorType;
 
 use ReachDigital\PhpConnectorLib\Api\ConnectorType\CreditMemoPushConnectorInterface;
-use ReachDigital\PhpConnectorLib\Model\Connector;
+use ReachDigital\PhpConnectorLib\Model\AbstractConnector;
 
-class CreditMemoPushConnector extends Connector implements CreditMemoPushConnectorInterface
+class CreditMemoPushAbstractConnector extends AbstractConnector implements CreditMemoPushConnectorInterface
 {
 }

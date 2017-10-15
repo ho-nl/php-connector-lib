@@ -7,8 +7,8 @@
 namespace ReachDigital\PhpConnectorLib\Model\ConnectorType;
 
 use ReachDigital\PhpConnectorLib\Api\ConnectorType\OrderPullConnectorInterface;
-use ReachDigital\PhpConnectorLib\Model\Connector;
+use ReachDigital\PhpConnectorLib\Model\AbstractConnector;
 
-class OrderPullConnector extends Connector implements OrderPullConnectorInterface
+class OrderPullAbstractConnector extends AbstractConnector implements OrderPullConnectorInterface
 {
 }

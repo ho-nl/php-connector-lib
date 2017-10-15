@@ -7,8 +7,8 @@
 namespace ReachDigital\PhpConnectorLib\Model\ConnectorType;
 
 use ReachDigital\PhpConnectorLib\Api\ConnectorType\ShipmentPullConnectorInterface;
-use ReachDigital\PhpConnectorLib\Model\Connector;
+use ReachDigital\PhpConnectorLib\Model\AbstractConnector;
 
-class ShipmentPullConnector extends Connector implements ShipmentPullConnectorInterface
+class ShipmentPullAbstractConnector extends AbstractConnector implements ShipmentPullConnectorInterface
 {
 }

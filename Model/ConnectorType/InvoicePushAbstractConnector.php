@@ -7,8 +7,8 @@
 namespace ReachDigital\PhpConnectorLib\Model\ConnectorType;
 
 use ReachDigital\PhpConnectorLib\Api\ConnectorType\InvoicePushConnectorInterface;
-use ReachDigital\PhpConnectorLib\Model\Connector;
+use ReachDigital\PhpConnectorLib\Model\AbstractConnector;
 
-class InvoicePushConnector extends Connector implements InvoicePushConnectorInterface
+class InvoicePushAbstractConnector extends AbstractConnector implements InvoicePushConnectorInterface
 {
 }

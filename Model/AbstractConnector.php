@@ -11,7 +11,7 @@ use ReachDigital\PhpConnectorLib\Api\IntegrationInterface;
 use ReachDigital\PhpConnectorLib\Api\IntegrationChangedInterface;
 use ReachDigital\PhpConnectorLib\Api\QueueInterface;
 
-abstract class Connector implements ConnectorInterface
+abstract class AbstractConnector implements ConnectorInterface
 {
     /**
      * @var QueueInterface

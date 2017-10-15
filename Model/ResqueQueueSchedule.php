@@ -4,13 +4,6 @@
  * See LICENSE.txt for license details.
  */
 
-/**
- * Created by PhpStorm.
- * User: paulhachmang
- * Date: 12-10-17
- * Time: 22:13
- */
-
 namespace ReachDigital\PhpConnectorLib\Model;
 
 use ReachDigital\PhpConnectorLib\Api\QueueScheduleInterface;

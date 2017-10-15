@@ -8,10 +8,9 @@
 namespace ReachDigital\PhpConnectorLib\Api;
 
 /**
- * Interface MapperInterface
  * @package ReachDigital\PhpConnectorLib\Api
  */
-interface MapperInterface
+interface ObjectProcessorInterface
 {
     /**
      * Map fields to internal object.
