@@ -17,9 +17,6 @@ class Runner {
     public function __construct(
         ConnectorPoolInterface $connectorPool = null
     ) {
-        if ($connectorPool === null) {
-            $connectorPool = \ReachDigital\PhpConnectorLib\Model\ConnectorPool::getInstance();
-        }
         $this->connectorPool = $connectorPool;
     }
 
