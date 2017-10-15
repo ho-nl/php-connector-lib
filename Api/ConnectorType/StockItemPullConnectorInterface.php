@@ -9,4 +9,6 @@ namespace ReachDigital\PhpConnectorLib\Api\ConnectorType;
 use ReachDigital\PhpConnectorLib\Api\ConnectorInterface;
 
 interface StockItemPullConnectorInterface extends ConnectorInterface {
+    const NAME = 'stock_item';
+    const DIRECTION = 'pull';
 }

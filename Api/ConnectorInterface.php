@@ -14,15 +14,9 @@ namespace ReachDigital\PhpConnectorLib\Api;
  */
 interface ConnectorInterface
 {
-    /**
-     * @return string
-     */
-    public function getName(): string;
+    const NAME = null;
+    const DIRECTION = null;
 
-    /**
-     * @return string
-     */
-    public function getType(): string;
 
     /**
      * @param string[]|null $references List of references to be updated. When no argument is provided it is expected

@@ -9,4 +9,6 @@ namespace ReachDigital\PhpConnectorLib\Api\ConnectorType;
 use ReachDigital\PhpConnectorLib\Api\ConnectorInterface;
 
 interface TransferOrderPullConnectorInterface extends ConnectorInterface {
+    const NAME = 'transfer_order';
+    const DIRECTION = 'pull';
 }

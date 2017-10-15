@@ -9,17 +9,6 @@ namespace ReachDigital\PhpConnectorLib\Model\ConnectorType;
 use ReachDigital\PhpConnectorLib\Api\ConnectorType\ShipmentPushConnectorInterface;
 use ReachDigital\PhpConnectorLib\Model\Connector;
 
-class ShipmentPushConnector
-    extends Connector
-    implements ShipmentPushConnectorInterface
+class ShipmentPushConnector extends Connector implements ShipmentPushConnectorInterface
 {
-    public function getName(): string
-    {
-        return 'shipment';
-    }
-
-    public function getType(): string
-    {
-        return 'push';
-    }
 }

@@ -9,4 +9,6 @@ namespace ReachDigital\PhpConnectorLib\Api\ConnectorType;
 use ReachDigital\PhpConnectorLib\Api\ConnectorInterface;
 
 interface InvoicePullConnectorInterface extends ConnectorInterface {
+    const NAME = 'invoice';
+    const DIRECTION = 'pull';
 }

@@ -9,17 +9,6 @@ namespace ReachDigital\PhpConnectorLib\Model\ConnectorType;
 use ReachDigital\PhpConnectorLib\Api\ConnectorType\OrderPushConnectorInterface;
 use ReachDigital\PhpConnectorLib\Model\Connector;
 
-class OrderPushConnector
-    extends Connector
-    implements OrderPushConnectorInterface
+class OrderPushConnector extends Connector implements OrderPushConnectorInterface
 {
-    public function getName(): string
-    {
-        return 'order';
-    }
-
-    public function getType(): string
-    {
-        return 'push';
-    }
 }

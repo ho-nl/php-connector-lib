@@ -8,5 +8,12 @@ namespace ReachDigital\PhpConnectorLib\Api\ConnectorType;
 
 use ReachDigital\PhpConnectorLib\Api\ConnectorInterface;
 
+/**
+ * Interface ContainerPullConnectorInterface
+ *
+ * @package ReachDigital\PhpConnectorLib\Api\ConnectorType
+ */
 interface ContainerPullConnectorInterface extends ConnectorInterface {
+    const NAME = 'container';
+    const DIRECTION = 'pull';
 }

@@ -9,4 +9,6 @@ namespace ReachDigital\PhpConnectorLib\Api\ConnectorType;
 use ReachDigital\PhpConnectorLib\Api\ConnectorInterface;
 
 interface CustomerPushConnectorInterface extends ConnectorInterface {
+    const NAME = 'customer';
+    const DIRECTION = 'push';
 }

@@ -9,4 +9,6 @@ namespace ReachDigital\PhpConnectorLib\Api\ConnectorType;
 use ReachDigital\PhpConnectorLib\Api\ConnectorInterface;
 
 interface CreditMemoPullConnectorInterface extends ConnectorInterface {
+    const NAME = 'credit_memo';
+    const DIRECTION = 'pull';
 }

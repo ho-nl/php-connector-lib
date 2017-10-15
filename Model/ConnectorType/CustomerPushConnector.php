@@ -9,17 +9,6 @@ namespace ReachDigital\PhpConnectorLib\Model\ConnectorType;
 use ReachDigital\PhpConnectorLib\Api\ConnectorType\CustomerPushConnectorInterface;
 use ReachDigital\PhpConnectorLib\Model\Connector;
 
-class CustomerPushConnector
-    extends Connector
-    implements CustomerPushConnectorInterface
+class CustomerPushConnector extends Connector implements CustomerPushConnectorInterface
 {
-    public function getName(): string
-    {
-        return 'customer';
-    }
-
-    public function getType(): string
-    {
-        return 'push';
-    }
 }
