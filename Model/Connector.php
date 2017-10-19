@@ -61,7 +61,15 @@ abstract class Connector implements ConnectorInterface
      */
     function enqueue($entity, bool $forceEnqueue = false)
     {
-        $hash = $this->integration->entityHash($entity);
+        // Prevent exceptions in the object processors from breaking things like the checkout, saving customers, etc
+        try {
+            $hash = $this->integration->entityHash($entity);
+        } catch (\Exception $e) {
+            \Mage::logException($e);
+            // Force enqueueing if we can't compare hashes
+            $hash = '';
+            $forceEnqueue = true;
+        }
         $previousHash = $this->integration->previousEntityHash($entity, $this->getName(), $this->getType());
 
         if ($hash == $previousHash && !$forceEnqueue) {
