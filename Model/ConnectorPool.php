@@ -22,6 +22,16 @@ class ConnectorPool implements ConnectorPoolInterface
     private static $instance;
 
     /**
+     * ConnectorPool constructor.
+     *
+     * @param ConnectorInterface[] $connectors
+     */
+    public function __construct(array $connectors = [])
+    {
+        $this->connectors = $connectors;
+    }
+
+    /**
      * @inheritdoc
      */
     public function register(ConnectorInterface $connector)
@@ -32,21 +42,21 @@ class ConnectorPool implements ConnectorPoolInterface
     /**
      * @inheritdoc
      */
-    public function getConnectors(string $type = null): array
+    public function getConnectors(string $instanceOf = null): array
     {
-        if (! $type) {
+        if (! $instanceOf) {
             return $this->connectors;
         }
 
-        return array_filter($this->connectors, function($connector) use ($type) {
-            return $connector instanceof $type;
+        return array_filter($this->connectors, function($connector) use ($instanceOf) {
+            return $connector instanceof $instanceOf;
         });
     }
 
     /**
-     * @inheritdoc
+     * @return ConnectorPoolInterface
      */
-    public static function getInstance()
+    public static function getInstance(): \ReachDigital\PhpConnectorLib\Api\ConnectorPoolInterface
     {
         if (self::$instance === null) {
             self::$instance = new self;

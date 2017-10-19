@@ -7,8 +7,9 @@
 namespace ReachDigital\PhpConnectorLib\Model;
 
 use ReachDigital\PhpConnectorLib\Api\ConnectorInterface;
-use ReachDigital\PhpConnectorLib\Api\IntegrationInterface;
-use ReachDigital\PhpConnectorLib\Api\IntegrationChangedInterface;
+use ReachDigital\PhpConnectorLib\Api\ConnectorDataProviderInterface;
+use ReachDigital\PhpConnectorLib\Api\ConnectorDataProviderChangedInterface;
+use ReachDigital\PhpConnectorLib\Api\JobInterface;
 use ReachDigital\PhpConnectorLib\Api\QueueInterface;
 
 abstract class AbstractConnector implements ConnectorInterface
@@ -19,73 +20,79 @@ abstract class AbstractConnector implements ConnectorInterface
     private $queue;
 
     /**
-     * @var IntegrationInterface
+     * @var ConnectorDataProviderInterface
      */
-    private $integration;
+    private $dataProvider;
+
+    /**
+     * @var JobInterface
+     */
+    private $job;
 
     public function __construct(
         QueueInterface $queue,
-        IntegrationInterface $integration
+        ConnectorDataProviderInterface $dataProvider,
+        JobInterface $job
     ) {
-
         $this->queue = $queue;
-        $this->integration = $integration;
+        $this->dataProvider = $dataProvider;
+        $this->job = $job;
     }
 
     /**
-     * @inheritdoc
+     * Run the Connector, this method should probably never be called directly but always through the Runner class.
+     *
+     * @param string[]|null $references List of references to be updated. When no argument is provided it is expected
+     * by the Connector to **fully update all entities**. A performant way to implement this is by implementing
+     * the PullChangedInterface and using that one.
+     * @param bool $forceEnqueue
+     * @param bool $forceAll
+     * @return string[] Job ID
      */
-    public function run(array $references = null, bool $forceEnqueue = false, bool $forceAll = false)
+    public function run(array $references = null, bool $forceEnqueue = false, bool $forceAll = false): array
     {
         if (! $references) {
-            if ($this->integration instanceof IntegrationChangedInterface && !$forceAll) {
-                $items = $this->integration->fetchChanged();
+            if ($this->dataProvider instanceof ConnectorDataProviderChangedInterface && !$forceAll) {
+                $items = $this->dataProvider->fetchChanged();
             } else {
-                $items = $this->integration->fetchAll();
+                $items = $this->dataProvider->fetchAll();
             }
-        }
-        else {
+        } else {
             /** @var \Generator $items */
-            $items = $this->integration->fetch($references);
+            $items = $this->dataProvider->fetch($references);
         }
 
+        $jobIds = [];
         foreach ($items as $item) {
-            $this->enqueue($item, $forceEnqueue);
+            $jobIds[] = $this->enqueue($item, $forceEnqueue);
         }
+        return $jobIds;
     }
 
     /**
-     * @inheritdoc
+     * Queues a single entity
+     *
+     * @param mixed $entity
+     * @param bool $forceEnqueue
+     * @return string|bool Job ID
      */
     public function enqueue($entity, bool $forceEnqueue = false)
     {
-        $hash = $this->integration->entityHash($entity);
-        $previousHash = $this->integration->previousEntityHash($entity, $this->getName(), $this->getType());
+        $args = [
+            'entity' => $this->dataProvider->packEntity($entity),
+            'entityId' => $this->dataProvider->entityId($entity),
+            'integrationName' => $this::NAME,
+            'integrationDirection' => $this::DIRECTION
+        ];
 
-        if ($hash == $previousHash && !$forceEnqueue) {
-            return false;
-        }
-
-        $jobId = $this->integration->previousJobId($entity, $this->getName(), $this->getType());
-
-        $status = $this->queue->jobStatus($jobId);
-
-        if ($status == $this->queue->waitingStatus()) {
-            $this->queue->dequeue(get_class($this->integration), $jobId);
-        }
-
-        $packedEntity = $this->integration->packEntity($entity);
         if ($forceEnqueue) {
-            $packedEntity['force'] = uniqid();
+            $args['force'] = uniqid();
         }
 
         return $this->queue->enqueue(
-            get_class($this->integration),
-            $this->getName(),
-            $this->getType(),
-            $this->integration->entityId($entity),
-            $packedEntity,
-            $hash
+            QueueInterface::QUEUE_NORMAL,
+            get_class($this->job),
+            $args
         );
     }
 }

@@ -6,13 +6,9 @@
 
 namespace ReachDigital\PhpConnectorLib\Api;
 
-use ReachDigital\PhpConnectorLib\Api\ConnectorInterface;
-
 /**
  * Interface ConnectorPoolInterface
  * @package ReachDigital\PhpConnectorLib\Api
- * @todo Each Connector should implement a getName() method so that we can get the connectors by name
- *       getName should get the name of the implementation. so $this->integration->getName().
  */
 interface ConnectorPoolInterface
 {
@@ -27,9 +23,4 @@ interface ConnectorPoolInterface
      * @return ConnectorInterface[]
      */
     public function getConnectors(string $type = null): array;
-
-    /**
-     * @return ConnectorPoolInterface
-     */
-    public static function getInstance();
 }

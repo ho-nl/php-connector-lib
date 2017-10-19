@@ -23,7 +23,8 @@
 <?php
 $customerPullTestRunner = new \ReachDigital\PhpConnectorLib\Model\ConnectorType\CustomerPullConnector(
     $queue,
-    new \ReachDigital\PhpConnectorLib\Test\Model\MyErpToMagentoCustomerPullTest() //Implemented specifically for each system.
+    new \ReachDigital\PhpConnectorLib\Api\ConnectorDataProviderInterface(), //class that implements this interface
+    new \ReachDigital\PhpConnectorLib\Api\JobInterface(), //class that implements this interface
 );
 ```
 

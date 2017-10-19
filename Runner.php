@@ -21,28 +21,18 @@ class Runner {
     }
 
     /**
-     * @param null $type
+     * @param string $type
      * @param array|null $references
      * @param bool $forceQueue
-     * @param bool $forceAll
+     * @param bool $forceAll Requeue all items
      * @return array
      */
-    public function run($type = null, array $references = null, bool $forceQueue = false, bool $forceAll = false)
+    public function run(string $type = null, array $references = null, bool $forceQueue = false, bool $forceAll = false): array
     {
         $result = [];
         foreach ($this->connectorPool->getConnectors($type) as $connector) {
             $result[get_class($connector)] = $connector->run($references, $forceQueue, $forceAll);
         }
-        return $result;
-    }
-
-    public function enqueue($type = null, $entity)
-    {
-        $result = [];
-        foreach ($this->connectorPool->getConnectors($type) as $connector) {
-            $result[get_class($connector)] = $connector->enqueue($entity);
-        }
-
         return $result;
     }
 }

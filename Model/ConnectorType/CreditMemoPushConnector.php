@@ -9,6 +9,16 @@ namespace ReachDigital\PhpConnectorLib\Model\ConnectorType;
 use ReachDigital\PhpConnectorLib\Api\ConnectorType\CreditMemoPushConnectorInterface;
 use ReachDigital\PhpConnectorLib\Model\AbstractConnector;
 
-class CreditMemoPushAbstractConnector extends AbstractConnector implements CreditMemoPushConnectorInterface
+class CreditMemoPushConnector extends AbstractConnector implements CreditMemoPushConnectorInterface
 {
+    public function getEntityName(): string
+    {
+        return self::NAME;
+    }
+
+    public function getEntityDirection(): string
+    {
+        return self::DIRECTION;
+    }
+
 }

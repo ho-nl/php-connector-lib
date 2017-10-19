@@ -9,6 +9,16 @@ namespace ReachDigital\PhpConnectorLib\Model\ConnectorType;
 use ReachDigital\PhpConnectorLib\Api\ConnectorType\StockItemPullConnectorInterface;
 use ReachDigital\PhpConnectorLib\Model\AbstractConnector;
 
-class StockItemPullAbstractConnector extends AbstractConnector implements StockItemPullConnectorInterface
+class StockItemPullConnector extends AbstractConnector implements StockItemPullConnectorInterface
 {
+    public function getEntityName(): string
+    {
+        return self::NAME;
+    }
+
+    public function getEntityDirection(): string
+    {
+        return self::DIRECTION;
+    }
+
 }

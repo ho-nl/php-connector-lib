@@ -9,6 +9,16 @@ namespace ReachDigital\PhpConnectorLib\Model\ConnectorType;
 use ReachDigital\PhpConnectorLib\Api\ConnectorType\InvoicePullConnectorInterface;
 use ReachDigital\PhpConnectorLib\Model\AbstractConnector;
 
-class InvoicePullAbstractConnector extends AbstractConnector implements InvoicePullConnectorInterface
+class InvoicePullConnector extends AbstractConnector implements InvoicePullConnectorInterface
 {
+    public function getEntityName(): string
+    {
+        return self::NAME;
+    }
+
+    public function getEntityDirection(): string
+    {
+        return self::DIRECTION;
+    }
+
 }

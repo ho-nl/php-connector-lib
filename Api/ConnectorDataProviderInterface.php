@@ -6,7 +6,7 @@
 
 namespace ReachDigital\PhpConnectorLib\Api;
 
-interface IntegrationInterface extends JobInterface
+interface ConnectorDataProviderInterface extends JobInterface
 {
     /**
      * @return string
@@ -21,9 +21,9 @@ interface IntegrationInterface extends JobInterface
     /**
      * Get a list of all references.
      *
-     * @return \Generator|bool List of references
+     * @return \Generator List of references
      */
-    public function fetchAll();
+    public function fetchAll(): \Generator;
 
     /**
      * Fetch data for given references
@@ -34,7 +34,7 @@ interface IntegrationInterface extends JobInterface
      * @param array $references
      * @return \Generator List of objects
      */
-    public function fetch(array $references);
+    public function fetch(array $references): \Generator;
 
     /**
      * Build an object from the given array
@@ -52,15 +52,7 @@ interface IntegrationInterface extends JobInterface
      * @param mixed $entity
      * @return array
      */
-    public function packEntity($entity);
-
-    /**
-     * Returns a unique hash for the current entity.
-     *
-     * @param $entity
-     * @return mixed
-     */
-    public function entityHash($entity);
+    public function packEntity($entity): array;
 
     /**
      * Returns an identifier unique for the entity
@@ -69,25 +61,6 @@ interface IntegrationInterface extends JobInterface
      * @return string|int
      */
     public function entityId($entity);
-
-    /**
-     * Returns the previously successfully synced entity hash.
-     * @param mixed $entity
-     * @param string $name
-     * @param string $type
-     * @return string|null
-     */
-    public function previousEntityHash($entity, string $name, string $type);
-
-    /**
-     * Returns the previously enqueued job ID
-     *
-     * @param mixed $entity
-     * @param string $name
-     * @param string $type
-     * @return string
-     */
-    public function previousJobId($entity, string $name, string $type);
 
     /**
      * Builds an object from the entity using objectProcessors

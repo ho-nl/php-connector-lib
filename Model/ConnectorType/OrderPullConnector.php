@@ -9,6 +9,16 @@ namespace ReachDigital\PhpConnectorLib\Model\ConnectorType;
 use ReachDigital\PhpConnectorLib\Api\ConnectorType\OrderPullConnectorInterface;
 use ReachDigital\PhpConnectorLib\Model\AbstractConnector;
 
-class OrderPullAbstractConnector extends AbstractConnector implements OrderPullConnectorInterface
+class OrderPullConnector extends AbstractConnector implements OrderPullConnectorInterface
 {
+    public function getEntityName(): string
+    {
+        return self::NAME;
+    }
+
+    public function getEntityDirection(): string
+    {
+        return self::DIRECTION;
+    }
+
 }

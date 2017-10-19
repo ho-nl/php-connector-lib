@@ -9,6 +9,16 @@ namespace ReachDigital\PhpConnectorLib\Model\ConnectorType;
 use ReachDigital\PhpConnectorLib\Api\ConnectorType\ShipmentPushConnectorInterface;
 use ReachDigital\PhpConnectorLib\Model\AbstractConnector;
 
-class ShipmentPushAbstractConnector extends AbstractConnector implements ShipmentPushConnectorInterface
+class ShipmentPushConnector extends AbstractConnector implements ShipmentPushConnectorInterface
 {
+    public function getEntityName(): string
+    {
+        return self::NAME;
+    }
+
+    public function getEntityDirection(): string
+    {
+        return self::DIRECTION;
+    }
+
 }
