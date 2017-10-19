@@ -57,7 +57,7 @@ class ResqueQueue implements QueueInterface
             \Resque_Job_Status::STATUS_RUNNING  => 'Running',
             \Resque_Job_Status::STATUS_FAILED   => 'Failed',
             \Resque_Job_Status::STATUS_COMPLETE => 'Complete',
-            self::STATUS_HISTORIC               => 'Historic',
+            self::STATUS_HISTORIC               => 'Unknown',
         ];
     }
 
