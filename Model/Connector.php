@@ -50,9 +50,11 @@ abstract class Connector implements ConnectorInterface
         }
 
         foreach ($items as $item) { // @fixme: invalid argument supplied to foreach
-            if ($this->integration->canEnqueue($item)) {
-                $this->enqueue($item, $forceEnqueue);
+            if (!is_numeric($item) && !$this->integration->canEnqueue($item)) {
+                continue;
             }
+
+            $this->enqueue($item, $forceEnqueue);
         }
     }
 
@@ -61,27 +63,26 @@ abstract class Connector implements ConnectorInterface
      */
     function enqueue($entity, bool $forceEnqueue = false)
     {
-        // Prevent exceptions in the object processors from breaking things like the checkout, saving customers, etc
-        try {
+        if (!is_numeric($entity)) {
+            // Not numeric; compare entity hashes
             $hash = $this->integration->entityHash($entity);
-        } catch (\Exception $e) {
-            \Mage::logException($e);
-            // Force enqueueing if we can't compare hashes
+
+            $previousHash = $this->integration->previousEntityHash($entity, $this->getName(), $this->getType());
+
+            if ($hash == $previousHash && !$forceEnqueue) {
+                return false;
+            }
+
+            $jobId = $this->integration->previousJobId($entity, $this->getName(), $this->getType());
+
+            $status = $this->queue->jobStatus($jobId);
+
+            if ($status == $this->queue->waitingStatus()) {
+                $this->queue->dequeue(get_class($this->integration), $jobId);
+            }
+        }
+        else {
             $hash = '';
-            $forceEnqueue = true;
-        }
-        $previousHash = $this->integration->previousEntityHash($entity, $this->getName(), $this->getType());
-
-        if ($hash == $previousHash && !$forceEnqueue) {
-            return false;
-        }
-
-        $jobId = $this->integration->previousJobId($entity, $this->getName(), $this->getType());
-
-        $status = $this->queue->jobStatus($jobId);
-
-        if ($status == $this->queue->waitingStatus()) {
-            $this->queue->dequeue(get_class($this->integration), $jobId);
         }
 
         $packedEntity = $this->integration->packEntity($entity);
@@ -93,7 +94,7 @@ abstract class Connector implements ConnectorInterface
             get_class($this->integration),
             $this->getName(),
             $this->getType(),
-            $this->integration->entityId($entity),
+            is_numeric($entity) ?: $this->integration->entityId($entity),
             $packedEntity,
             $hash
         );
