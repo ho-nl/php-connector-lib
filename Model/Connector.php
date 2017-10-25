@@ -72,17 +72,17 @@ abstract class Connector implements ConnectorInterface
             if ($hash == $previousHash && !$forceEnqueue) {
                 return false;
             }
-
-            $jobId = $this->integration->previousJobId($entity, $this->getName(), $this->getType());
-
-            $status = $this->queue->jobStatus($jobId);
-
-            if ($status == $this->queue->waitingStatus()) {
-                $this->queue->dequeue(get_class($this->integration), $jobId);
-            }
         }
         else {
             $hash = '';
+        }
+
+        $jobId = $this->integration->previousJobId($entity, $this->getName(), $this->getType());
+
+        $status = $this->queue->jobStatus($jobId);
+
+        if ($status == $this->queue->waitingStatus()) {
+            $this->queue->dequeue(get_class($this->integration), $jobId);
         }
 
         $packedEntity = $this->integration->packEntity($entity);
