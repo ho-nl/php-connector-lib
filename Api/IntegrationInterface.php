@@ -41,7 +41,7 @@ interface IntegrationInterface
      *
      * @return bool
      */
-    function canEnqueue($entity);
+    function canProcess($entity);
 
     /**
      * Build an object from the given array
