@@ -94,7 +94,7 @@ abstract class Connector implements ConnectorInterface
             get_class($this->integration),
             $this->getName(),
             $this->getType(),
-            is_numeric($entity) ?: $this->integration->entityId($entity),
+            is_numeric($entity) ? $entity : $this->integration->entityId($entity),
             $packedEntity,
             $hash
         );
