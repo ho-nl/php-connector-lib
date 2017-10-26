@@ -26,6 +26,7 @@ class ConnectorPool implements ConnectorPoolInterface
      */
     function register(ConnectorInterface $connector)
     {
+        //@todo implement uniqueness check on integrationName
         $this->connectors[] = $connector;
     }
 
