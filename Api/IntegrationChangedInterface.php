@@ -14,7 +14,8 @@ interface IntegrationChangedInterface extends IntegrationInterface
      * Usage: Used in combination with fetchCustomers to create batches
      * which in turn can be processed in the queue.
      *
+     * @param bool $forceEnqueue
      * @return \Generator|bool List of external references
      */
-    function fetchChanged();
+    function fetchChanged(bool $forceEnqueue = false);
 }

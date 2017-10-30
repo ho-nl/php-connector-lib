@@ -39,14 +39,14 @@ abstract class Connector implements ConnectorInterface
     {
         if (! $references) {
             if ($this->integration instanceof IntegrationChangedInterface && !$forceAll) {
-                $items = $this->integration->fetchChanged();
+                $items = $this->integration->fetchChanged($forceEnqueue);
             } else {
-                $items = $this->integration->fetchAll();
+                $items = $this->integration->fetchAll($forceEnqueue);
             }
         }
         else {
             /** @var \Generator $items */
-            $items = $this->integration->fetch($references);
+            $items = $this->integration->fetch($references, $forceEnqueue);
         }
 
         foreach ($items as $item) { // @fixme: invalid argument supplied to foreach

@@ -21,9 +21,10 @@ interface IntegrationInterface
     /**
      * Get a list of all references.
      *
+     * @param bool $forceEnqueue
      * @return \Generator|bool List of references
      */
-    function fetchAll();
+    function fetchAll(bool $forceEnqueue = false);
 
     /**
      * Fetch data for given references
@@ -32,9 +33,10 @@ interface IntegrationInterface
      * to be processed later.
      *
      * @param array $references
+     * @param bool $forceEnqueue
      * @return \Generator List of objects
      */
-    function fetch(array $references);
+    function fetch(array $references, bool $forceEnqueue = false);
 
     /**
      * Wether or not given entity can be enqueued.
