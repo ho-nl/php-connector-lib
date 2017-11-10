@@ -10,7 +10,8 @@ use ReachDigital\PhpConnectorLib\Api\QueueInterface;
 
 class ResqueQueue implements QueueInterface
 {
-    const STATUS_HISTORIC = 0;
+    const STATUS_NEVER_SYNCED = 0;
+    const STATUS_HISTORIC = 5;
 
     /**
      * @inheritdoc
@@ -57,7 +58,8 @@ class ResqueQueue implements QueueInterface
             \Resque_Job_Status::STATUS_RUNNING  => 'Running',
             \Resque_Job_Status::STATUS_FAILED   => 'Failed',
             \Resque_Job_Status::STATUS_COMPLETE => 'Complete',
-            self::STATUS_HISTORIC               => 'Unknown',
+            self::STATUS_NEVER_SYNCED           => 'Never Synced',
+            self::STATUS_HISTORIC               => 'Complete',
         ];
     }
 
@@ -67,7 +69,7 @@ class ResqueQueue implements QueueInterface
      */
     public function getCombinedStatus(array $statuses)
     {
-        $shownStatus = self::STATUS_HISTORIC;
+        $shownStatus = self::STATUS_NEVER_SYNCED;
 
         $statusOrder = $this->getStatusOrder();
         foreach ($statuses as $status) {
@@ -91,6 +93,7 @@ class ResqueQueue implements QueueInterface
             \Resque_Job_Status::STATUS_RUNNING,
             \Resque_Job_Status::STATUS_WAITING,
             \Resque_Job_Status::STATUS_COMPLETE,
+            self::STATUS_NEVER_SYNCED,
             self::STATUS_HISTORIC,
         ];
     }
