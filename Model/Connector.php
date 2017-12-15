@@ -82,7 +82,15 @@ abstract class Connector implements ConnectorInterface
         $status = $this->queue->jobStatus($jobId);
 
         if ($status == $this->queue->waitingStatus()) {
-            $this->queue->dequeue(get_class($this->integration), $jobId);
+            if (!is_numeric($entity)) {
+                // Dequeue when full entity is queued
+                $this->queue->dequeue(\ReachDigital_PhpConnectorLib_Model_ResqueQueue::QUEUE_NORMAL, get_class($this->integration), $jobId);
+                $this->queue->dequeue(\ReachDigital_PhpConnectorLib_Model_ResqueQueue::QUEUE_BACKGROUND, get_class($this->integration), $jobId);
+            }
+            else {
+                // Skip queueing this entity
+                return false;
+            }
         }
 
         $packedEntity = $this->integration->packEntity($entity);

@@ -38,8 +38,9 @@ interface ConnectorInterface
     /**
      * Queues a single entity
      * @param mixed $entity
+     * @param string $queue
      * @param bool $forceEnqueue
      * @return string Job ID
      */
-    function enqueue($entity, bool $forceEnqueue = false);
+    function enqueue($entity, string $queue, bool $forceEnqueue = false);
 }

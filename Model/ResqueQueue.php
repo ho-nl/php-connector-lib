@@ -32,9 +32,9 @@ class ResqueQueue implements QueueInterface
     /**
      * @inheritdoc
      */
-    public function dequeue($class, $jobId)
+    public function dequeue(string $queue, $class, $jobId)
     {
-        return \Resque::dequeue('connector', [$class => $jobId]);
+        return \Resque::dequeue($queue, [$class => $jobId]);
     }
 
     /**

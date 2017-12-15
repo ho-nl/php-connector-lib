@@ -31,11 +31,12 @@ interface QueueInterface
     public function enqueue(string $queue, $class, string $entityName, string $connectorType, string $entityId, $entity, string $hash);
 
     /**
+     * @param string $queue QUEUE_URGENT|QUEUE_NORMAL|QUEUE_BACKGROUND
      * @param string $class
      * @param string $jobId
      * @return mixed
      */
-    public function dequeue($class, $jobId);
+    public function dequeue(string $queue, $class, $jobId);
 
     /**
      * @return int|string
