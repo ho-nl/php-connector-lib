@@ -37,11 +37,15 @@ abstract class Connector implements ConnectorInterface
      */
     function run(array $references = null, bool $forceEnqueue = false, bool $forceAll = false)
     {
+        $queue = ResqueQueue::QUEUE_NORMAL;
+
         if (! $references) {
             if ($this->integration instanceof IntegrationChangedInterface && !$forceAll) {
                 $items = $this->integration->fetchChanged($forceEnqueue);
             } else {
                 $items = $this->integration->fetchAll($forceEnqueue);
+                // Put tasks in background queue when fetching all
+                $queue = ResqueQueue::QUEUE_BACKGROUND;
             }
         }
         else {
@@ -54,14 +58,14 @@ abstract class Connector implements ConnectorInterface
                 continue;
             }
 
-            $this->enqueue($item, $forceEnqueue);
+            $this->enqueue($item, $queue, $forceEnqueue);
         }
     }
 
     /**
      * @inheritdoc
      */
-    function enqueue($entity, bool $forceEnqueue = false)
+    function enqueue($entity, string $queue = QueueInterface::QUEUE_NORMAL, bool $forceEnqueue = false)
     {
         if (!is_numeric($entity)) {
             // Not numeric; compare entity hashes
@@ -99,7 +103,7 @@ abstract class Connector implements ConnectorInterface
         }
 
         return $this->queue->enqueue(
-            \ReachDigital_PhpConnectorLib_Model_ResqueQueue::QUEUE_NORMAL,
+            $queue,
             get_class($this->integration),
             $this->getName(),
             $this->getType(),
