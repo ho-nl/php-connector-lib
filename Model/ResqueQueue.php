@@ -13,12 +13,20 @@ class ResqueQueue implements QueueInterface
     const STATUS_NEVER_SYNCED = 0;
     const STATUS_HISTORIC = 5;
 
+    public static $queues = [
+        self::QUEUE_URGENT,
+        self::QUEUE_NORMAL,
+        self::QUEUE_BACKGROUND,
+    ];
+
     /**
      * @inheritdoc
      */
-    public function enqueue($class, string $entityName, string $connectorType, string $entityId, $entity, string $hash)
+    public function enqueue(string $queue, $class, string $entityName, string $connectorType, string $entityId, $entity, string $hash)
     {
-        return \Resque::enqueue('connector', $class, ['entity' => $entity, 'hash' => $hash], true);
+        $this->validateQueue($queue);
+
+        return \Resque::enqueue($queue, $class, ['entity' => $entity, 'hash' => $hash], true);
     }
 
     /**
@@ -46,6 +54,19 @@ class ResqueQueue implements QueueInterface
         $status = new \Resque_Job_Status($jobId);
 
         return $status->get();
+    }
+
+    /**
+     * @param string $queue
+     *
+     * @throws \RuntimeException
+     */
+    private function validateQueue(string $queue)
+    {
+        if (!in_array($queue, self::$queues, true)) {
+            $msg = 'Queue %s not found, must be one of %s';
+            throw new \RuntimeException(sprintf($msg, $queue, implode(', ', self::$queues)));
+        }
     }
 
     /**

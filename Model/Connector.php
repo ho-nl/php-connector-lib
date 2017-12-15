@@ -91,6 +91,7 @@ abstract class Connector implements ConnectorInterface
         }
 
         return $this->queue->enqueue(
+            \ReachDigital_PhpConnectorLib_Model_ResqueQueue::QUEUE_NORMAL,
             get_class($this->integration),
             $this->getName(),
             $this->getType(),
