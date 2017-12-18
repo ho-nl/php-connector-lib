@@ -54,10 +54,6 @@ abstract class Connector implements ConnectorInterface
         }
 
         foreach ($items as $item) { // @fixme: invalid argument supplied to foreach
-            if (!is_numeric($item) && !$this->integration->canProcess($item)) {
-                continue;
-            }
-
             $this->enqueue($item, $queue, $forceEnqueue);
         }
     }
