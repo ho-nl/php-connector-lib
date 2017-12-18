@@ -49,27 +49,10 @@ interface IntegrationInterface
      * Build an object from the given array
      * Used to rebuild an object when running an enqueued job, with the given argument array
      *
-     * @param array $data
+     * @param int $entityId
      * @return mixed
      */
-    function unpackEntity(array $data);
-
-    /**
-     * Build an array from the given object
-     * Used to pass an object as array to the queue
-     *
-     * @param mixed $entity
-     * @return array
-     */
-    function packEntity($entity);
-
-    /**
-     * Returns a unique hash for the current entity.
-     *
-     * @param $entity
-     * @return mixed
-     */
-    function entityHash($entity);
+    function loadEntity(int $entityId);
 
     /**
      * Returns an identifier unique for the entity
@@ -78,15 +61,6 @@ interface IntegrationInterface
      * @return string|int
      */
     function entityId($entity);
-
-    /**
-     * Returns the previously successfully synced entity hash.
-     * @param mixed $entity
-     * @param string $name
-     * @param string $type
-     * @return string
-     */
-    function previousEntityHash($entity, string $name, string $type);
 
     /**
      * Returns the previously enqueued job ID

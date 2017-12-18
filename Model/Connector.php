@@ -65,41 +65,15 @@ abstract class Connector implements ConnectorInterface
     /**
      * @inheritdoc
      */
-    function enqueue($entity, string $queue = QueueInterface::QUEUE_NORMAL, bool $forceEnqueue = false)
+    function enqueue($entityId, string $queue = QueueInterface::QUEUE_NORMAL, bool $forceEnqueue = false)
     {
-        if (!is_numeric($entity)) {
-            // Not numeric; compare entity hashes
-            $hash = $this->integration->entityHash($entity);
-
-            $previousHash = $this->integration->previousEntityHash($entity, $this->getName(), $this->getType());
-
-            if ($hash == $previousHash && !$forceEnqueue) {
-                return false;
-            }
-        }
-        else {
-            $hash = '';
-        }
-
-        $jobId = $this->integration->previousJobId($entity, $this->getName(), $this->getType());
+        $jobId = $this->integration->previousJobId($entityId, $this->getName(), $this->getType());
 
         $status = $this->queue->jobStatus($jobId);
 
         if ($status == $this->queue->waitingStatus()) {
-            if (!is_numeric($entity)) {
-                // Dequeue when full entity is queued
-                $this->queue->dequeue(\ReachDigital_PhpConnectorLib_Model_ResqueQueue::QUEUE_NORMAL, get_class($this->integration), $jobId);
-                $this->queue->dequeue(\ReachDigital_PhpConnectorLib_Model_ResqueQueue::QUEUE_BACKGROUND, get_class($this->integration), $jobId);
-            }
-            else {
-                // Skip queueing this entity
-                return false;
-            }
-        }
-
-        $packedEntity = $this->integration->packEntity($entity);
-        if ($forceEnqueue) {
-            $packedEntity['force'] = uniqid();
+            // Skip queueing this entity
+            return false;
         }
 
         return $this->queue->enqueue(
@@ -107,9 +81,7 @@ abstract class Connector implements ConnectorInterface
             get_class($this->integration),
             $this->getName(),
             $this->getType(),
-            is_numeric($entity) ? $entity : $this->integration->entityId($entity),
-            $packedEntity,
-            $hash
+            $entityId
         );
     }
 }

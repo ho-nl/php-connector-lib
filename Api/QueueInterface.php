@@ -23,12 +23,10 @@ interface QueueInterface
      * @param string $class The name of the class that contains the code to execute the job.
      * @param string $entityName
      * @param string $connectorType
-     * @param string $entityId
-     * @param mixed $entity Serializable Entity as payload for the jon
-     * @param string $hash
+     * @param int $entityId
      * @return string
      */
-    public function enqueue(string $queue, $class, string $entityName, string $connectorType, string $entityId, $entity, string $hash);
+    public function enqueue(string $queue, $class, string $entityName, string $connectorType, int $entityId);
 
     /**
      * @param string $queue QUEUE_URGENT|QUEUE_NORMAL|QUEUE_BACKGROUND

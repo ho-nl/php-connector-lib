@@ -22,11 +22,11 @@ class ResqueQueue implements QueueInterface
     /**
      * @inheritdoc
      */
-    public function enqueue(string $queue, $class, string $entityName, string $connectorType, string $entityId, $entity, string $hash)
+    public function enqueue(string $queue, $class, string $entityName, string $connectorType, int $entityId)
     {
         $this->validateQueue($queue);
 
-        return \Resque::enqueue($queue, $class, ['entity' => $entity, 'hash' => $hash], true);
+        return \Resque::enqueue($queue, $class, ['entity_id' => $entityId], true);
     }
 
     /**
