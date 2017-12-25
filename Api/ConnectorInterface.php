@@ -42,5 +42,5 @@ interface ConnectorInterface
      * @param bool $forceEnqueue
      * @return string Job ID
      */
-    function enqueue($entity, string $queue, bool $forceEnqueue = false);
+    function enqueue($entity, string $queue = QueueInterface::QUEUE_NORMAL, bool $forceEnqueue = false);
 }
