@@ -65,9 +65,16 @@ abstract class Connector implements ConnectorInterface
     {
         $jobId = $this->integration->previousJobId($entityId, $this->getName(), $this->getType());
 
+        // FIXME: Re-enable this once dequeueing works correctly
+        // Dequeue existing job if force-enqueing
+//        if ($forceEnqueue) {
+//            foreach (\ReachDigital\PhpConnectorLib\Model\ResqueQueue::$queues as $queueType) {
+//                $this->queue->dequeue(get_class($this->integration), $jobId, $queueType);
+//            }
+//        }
         $status = $this->queue->jobStatus($jobId);
 
-        if ($status == $this->queue->waitingStatus()) {
+        if ($status == $this->queue->waitingStatus() && !$forceEnqueue) {
             // Skip queueing this entity
             return false;
         }
