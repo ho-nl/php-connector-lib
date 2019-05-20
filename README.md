@@ -8,9 +8,9 @@
 
 ## Concepts
 - The library is a pure PHP library and therefor compatble with any platform that runs on PHP.
-- The library implements a queueing system ([Resque](https://github.com/chrisboulton/php-resque)) that allows us to:
+- The library implements a queueing system ([Resque](https://github.com/ho-nl-fork/php-resque)) that allows us to:
   - Resilient error handling: Each request runs in it's own environment. When a single request fails other requests are handled properly.
-  - Status handling: Each job that is created has it's own status which can be displayed which can be [tracked](https://github.com/chrisboulton/php-resque#tracking-job-statuses).
+  - Status handling: Each job that is created has it's own status which can be displayed which can be [tracked](https://github.com/ho-nl-fork/php-resque#tracking-job-statuses).
   
  
 ## Technical design:
@@ -31,7 +31,7 @@ $customerPullTestRunner = new \ReachDigital\PhpConnectorLib\Model\ConnectorType\
 A queue is a FIFO (First In, First Out) data structure, which allows us to enqueue thousands of items in a fraction of a
 second and handle them via threads on the system at a later moment.
 
-The library used to achieve this is the very simple [Resque](https://github.com/chrisboulton/php-resque) library. The
+The library used to achieve this is the very simple [Resque](https://github.com/ho-nl-fork/php-resque) library. The
 only dependency is having Redis installed on your system.
 
 ## Installation
